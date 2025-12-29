@@ -14,7 +14,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -25,6 +24,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Note: We use lib/ for our MicroPython modules, so don't ignore it
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -205,3 +206,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# MicroPython specific
+*_config.json
+*.mpy
