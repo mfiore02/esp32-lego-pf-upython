@@ -164,7 +164,7 @@ This project follows an **incremental, test-driven development** approach:
 
 ### Prerequisites
 ```bash
-pip install esptool adafruit-ampy
+pip install esptool mpremote
 ```
 
 ### Flashing MicroPython Firmware
@@ -225,10 +225,16 @@ python -m pytest tests/
 
 ### Hardware-in-Loop Tests
 ```bash
-# Flash HWIL test to device
-ampy --port /dev/ttyUSB0 put hwil/test_button.py main.py
+# Flash HWIL test to device (Windows example with COM port)
+mpremote connect COM3 fs cp hwil/test_button.py :main.py
 
-# Monitor serial output
+# Linux/Mac example
+mpremote connect /dev/ttyUSB0 fs cp hwil/test_button.py :main.py
+
+# Monitor serial output with mpremote
+mpremote connect COM3 repl
+
+# Or use screen on Linux/Mac
 screen /dev/ttyUSB0 115200
 ```
 
