@@ -145,7 +145,7 @@ This project follows an **incremental, test-driven development** approach:
 1. ✅ `lib/config_manager.py` - NVM storage with versioning
 2. ✅ `lib/button.py` - Debounced button input
 3. ✅ `lib/led.py` - LED pattern control
-4. ⬜ `lib/potentiometer.py` - ADC with dead zone calibration
+4. ✅ `lib/potentiometer.py` - ADC with dead zone calibration
 5. ⬜ `lib/motor_driver.py` - TB6612 PWM control
 
 #### Phase 2: Communication Layer
