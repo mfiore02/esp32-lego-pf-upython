@@ -149,7 +149,7 @@ This project follows an **incremental, test-driven development** approach:
 5. ⬜ `lib/motor_driver.py` - TB6612 PWM control
 
 #### Phase 2: Communication Layer
-6. ⬜ `lib/espnow_protocol.py` - Message protocol and ESP-NOW wrapper
+6. ✅ `lib/espnow_protocol.py` - Message protocol and ESP-NOW wrapper
 
 #### Phase 3: Application Logic
 7. ⬜ `controller/main.py` - Controller normal mode
