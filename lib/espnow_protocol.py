@@ -84,6 +84,10 @@ class ESPNowProtocol:
         print("ESP-NOW initialized")
         print("MAC address:", self.get_mac_address())
 
+        # Add broadcast address for pairing discovery
+        # Uses add_peer() which handles "already exists" gracefully
+        self.add_peer(b'\xff\xff\xff\xff\xff\xff')
+
     def get_mac_address(self):
         """
         Get device MAC address as bytes.
@@ -107,6 +111,22 @@ class ESPNowProtocol:
             return ':'.join(['{:02X}'.format(b) for b in mac])
         return None
 
+    def _peer_exists(self, peer_mac):
+        """
+        Check if peer is already added.
+
+        Args:
+            peer_mac: Peer MAC address as bytes
+
+        Returns:
+            True if peer exists, False otherwise
+        """
+        peers = self.e.get_peers()
+        for peer in peers:
+            if peer[0] == peer_mac:
+                return True
+        return False
+
     def add_peer(self, peer_mac):
         """
         Add peer device for communication.
@@ -118,6 +138,11 @@ class ESPNowProtocol:
             # Convert to bytes if string
             if isinstance(peer_mac, str):
                 peer_mac = bytes.fromhex(peer_mac.replace(':', ''))
+
+            # Check if peer already exists
+            if self._peer_exists(peer_mac):
+                self.peer_mac = peer_mac
+                return
 
             self.e.add_peer(peer_mac)
             self.peer_mac = peer_mac

@@ -65,7 +65,7 @@ def test_sender():
         protocol.send_pair_request()
         print("Waiting for receiver to respond...")
         print("(Make sure receiver is running test_receiver())")
-        time.sleep(2)
+        #time.sleep(2)
 
         # Listen for pair acknowledgment
         start_time = time.time()
@@ -92,13 +92,20 @@ def test_sender():
     speed = 0
     direction = 0
     msg_count = 0
-    last_time = time.ticks_ms()
 
     try:
         while True:
+            # Get current sequence before sending
+            current_seq = protocol.sequence
+
             # Send control message
             protocol.send_control(speed, direction)
             msg_count += 1
+
+            # Print each message sent
+            print("SENT seq={} speed={} dir={}".format(
+                current_seq, speed, "FWD" if direction == 0 else "REV"
+            ))
 
             # Update speed (cycle 0-100)
             speed = (speed + 5) % 105
@@ -107,15 +114,7 @@ def test_sender():
             if speed == 0:
                 direction = 1 - direction
 
-            # Print stats every second
-            current_time = time.ticks_ms()
-            if time.ticks_diff(current_time, last_time) >= 1000:
-                print("Sent: {} messages | Speed: {} | Dir: {}".format(
-                    msg_count, speed, "FWD" if direction == 0 else "REV"
-                ))
-                last_time = current_time
-
-            time.sleep_ms(50)  # 20Hz update rate
+            time.sleep_ms(500)  # 2Hz update rate (slower for debugging)
 
     except KeyboardInterrupt:
         print("\n\nTransmission stopped")
@@ -145,8 +144,6 @@ def test_receiver():
     msg_count = 0
     last_sequence = -1
     missed_messages = 0
-    last_time = time.ticks_ms()
-    messages_per_second = 0
 
     try:
         while True:
@@ -161,12 +158,21 @@ def test_receiver():
                     if msg['sequence'] != expected_seq:
                         gap = (msg['sequence'] - expected_seq) % 256
                         missed_messages += gap
+                        print("!!! MISSED {} messages (expected seq={}, got seq={})".format(
+                            gap, expected_seq, msg['sequence']
+                        ))
 
                 last_sequence = msg['sequence']
 
                 # Handle message types
                 if msg['type'] == MessageType.CONTROL:
-                    messages_per_second += 1
+                    print("RECV seq={} speed={} dir={} (total={} missed={})".format(
+                        msg['sequence'],
+                        msg['speed'],
+                        "FWD" if msg['direction'] == 0 else "REV",
+                        msg_count,
+                        missed_messages
+                    ))
 
                 elif msg['type'] == MessageType.PAIR_REQUEST:
                     print("\n[PAIR] Received pairing request from:",
@@ -184,20 +190,6 @@ def test_receiver():
                     # Respond to ping
                     protocol.add_peer(msg['sender_mac'])
                     protocol.send_pong()
-
-            # Print stats every second
-            current_time = time.ticks_ms()
-            if time.ticks_diff(current_time, last_time) >= 1000:
-                if messages_per_second > 0:
-                    print("Received: {} total | {} msg/sec | Missed: {} | Last: Speed={} Dir={}".format(
-                        msg_count,
-                        messages_per_second,
-                        missed_messages,
-                        msg.get('speed', '?') if msg else '?',
-                        msg.get('direction', '?') if msg else '?'
-                    ))
-                messages_per_second = 0
-                last_time = current_time
 
     except KeyboardInterrupt:
         print("\n\nReception stopped")
