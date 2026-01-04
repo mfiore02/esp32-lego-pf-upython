@@ -91,19 +91,26 @@ def test_sender():
     speed = 0
     direction = 0
     msg_count = 0
+    send_times = []  # Track send timing
 
     try:
         while True:
             # Get current sequence before sending
             current_seq = protocol.sequence
 
-            # Send control message
+            # Send control message and measure time
+            start = time.ticks_us()
             protocol.send_control(speed, direction)
+            send_duration = time.ticks_diff(time.ticks_us(), start)
+            send_times.append(send_duration)
+
             msg_count += 1
 
-            # Print each message sent with sequence and total
-            print("SENT seq={:3d} tx_total={:4d} speed={:3d} dir={}".format(
-                current_seq, protocol.tx_total, speed, "FWD" if direction == 0 else "REV"
+            # Print each message sent with sequence and timing
+            print("SENT seq={:3d} tx_total={:4d} speed={:3d} dir={} ({:.1f}us)".format(
+                current_seq, protocol.tx_total, speed,
+                "FWD" if direction == 0 else "REV",
+                send_duration
             ))
 
             # Update speed (cycle 0-100)
@@ -119,6 +126,16 @@ def test_sender():
         print("\n\nTransmission stopped")
         print("Total messages sent (tx_total):", protocol.tx_total)
         print("Message count (local):", msg_count)
+
+        # Print timing statistics
+        if send_times:
+            print("\n--- Send Timing Statistics ({} messages) ---".format(len(send_times)))
+            print("Min: {:.1f} us ({:.3f} ms)".format(min(send_times), min(send_times) / 1000))
+            print("Max: {:.1f} us ({:.3f} ms)".format(max(send_times), max(send_times) / 1000))
+            print("Avg: {:.1f} us ({:.3f} ms)".format(
+                sum(send_times) / len(send_times),
+                sum(send_times) / len(send_times) / 1000
+            ))
 
 
 def test_receiver():
@@ -144,13 +161,18 @@ def test_receiver():
     msg_count = 0
     last_sequence = -1
     missed_messages = 0
+    recv_times = []  # Track receive timing
 
     try:
         while True:
-            msg = protocol.receive(timeout_ms=100)
+            # Measure receive time (non-blocking for accurate timing)
+            start = time.ticks_us()
+            msg = protocol.receive(timeout_ms=0)
+            recv_duration = time.ticks_diff(time.ticks_us(), start)
 
             if msg:
                 msg_count += 1
+                recv_times.append(recv_duration)
 
                 # Check for missed messages (sequence gaps)
                 if last_sequence >= 0:
@@ -166,13 +188,14 @@ def test_receiver():
 
                 # Handle message types
                 if msg['type'] == MessageType.CONTROL:
-                    print("RECV seq={:3d} rx_total={:4d} speed={:3d} dir={} (local={} missed={})".format(
+                    print("RECV seq={:3d} rx_total={:4d} speed={:3d} dir={} (local={} missed={}) ({:.1f}us)".format(
                         msg['sequence'],
                         protocol.rx_total,
                         msg['speed'],
                         "FWD" if msg['direction'] == 0 else "REV",
                         msg_count,
-                        missed_messages
+                        missed_messages,
+                        recv_duration
                     ))
 
                 elif msg['type'] == MessageType.PAIR_REQUEST:
@@ -200,6 +223,16 @@ def test_receiver():
         if msg_count > 0:
             loss_rate = (missed_messages / (msg_count + missed_messages)) * 100
             print("Message loss rate: {:.2f}%".format(loss_rate))
+
+        # Print timing statistics
+        if recv_times:
+            print("\n--- Receive Timing Statistics ({} messages) ---".format(len(recv_times)))
+            print("Min: {:.1f} us ({:.3f} ms)".format(min(recv_times), min(recv_times) / 1000))
+            print("Max: {:.1f} us ({:.3f} ms)".format(max(recv_times), max(recv_times) / 1000))
+            print("Avg: {:.1f} us ({:.3f} ms)".format(
+                sum(recv_times) / len(recv_times),
+                sum(recv_times) / len(recv_times) / 1000
+            ))
 
 
 def test_ping():
