@@ -53,6 +53,9 @@ class ESPNowProtocol:
     MSG_FORMAT = '!BBBB'
     MSG_SIZE = 4
 
+    # Broadcast MAC address for pairing discovery
+    BROADCAST_MAC = b'\xff\xff\xff\xff\xff\xff'
+
     def __init__(self, device_type='controller'):
         """
         Initialize ESP-NOW protocol.
@@ -63,7 +66,13 @@ class ESPNowProtocol:
         self.device_type = device_type
         self.e = None
         self.sta = None
-        self.sequence = 0  # Message sequence counter
+
+        # 8-bit sequence number for protocol messages (wraps at 256)
+        self.sequence = 0
+
+        # Total message counters (unbounded)
+        self.tx_total = 0
+        self.rx_total = 0
 
         # Paired peer MAC address
         self.peer_mac = None
@@ -86,7 +95,7 @@ class ESPNowProtocol:
 
         # Add broadcast address for pairing discovery
         # Uses add_peer() which handles "already exists" gracefully
-        self.add_peer(b'\xff\xff\xff\xff\xff\xff')
+        self.add_peer(self.BROADCAST_MAC)
 
     def get_mac_address(self):
         """
@@ -141,12 +150,17 @@ class ESPNowProtocol:
 
             # Check if peer already exists
             if self._peer_exists(peer_mac):
-                self.peer_mac = peer_mac
+                # Only set as primary peer if not broadcast
+                if peer_mac != self.BROADCAST_MAC:
+                    self.peer_mac = peer_mac
                 return
 
             self.e.add_peer(peer_mac)
-            self.peer_mac = peer_mac
-            print("Peer added:", ':'.join(['{:02X}'.format(b) for b in peer_mac]))
+
+            # Only set as primary peer if not broadcast
+            if peer_mac != self.BROADCAST_MAC:
+                self.peer_mac = peer_mac
+                print("Peer added:", ':'.join(['{:02X}'.format(b) for b in peer_mac]))
         except Exception as e:
             print("Error adding peer:", e)
 
@@ -183,12 +197,11 @@ class ESPNowProtocol:
         msg = struct.pack(
             self.MSG_FORMAT,
             MessageType.CONTROL,
-            self.sequence & 0xFF,
+            self.sequence,
             int(speed) & 0xFF,
             int(direction) & 0xFF
         )
 
-        self.sequence += 1
         return self._send(msg)
 
     def send_ping(self):
@@ -201,12 +214,11 @@ class ESPNowProtocol:
         msg = struct.pack(
             self.MSG_FORMAT,
             MessageType.PING,
-            self.sequence & 0xFF,
+            self.sequence,
             0,
             0
         )
 
-        self.sequence += 1
         return self._send(msg)
 
     def send_pong(self):
@@ -219,12 +231,11 @@ class ESPNowProtocol:
         msg = struct.pack(
             self.MSG_FORMAT,
             MessageType.PONG,
-            self.sequence & 0xFF,
+            self.sequence,
             0,
             0
         )
 
-        self.sequence += 1
         return self._send(msg)
 
     def send_pair_request(self):
@@ -237,12 +248,11 @@ class ESPNowProtocol:
         msg = struct.pack(
             self.MSG_FORMAT,
             MessageType.PAIR_REQUEST,
-            self.sequence & 0xFF,
+            self.sequence,
             0,
             0
         )
 
-        self.sequence += 1
         return self._send(msg, broadcast=True)
 
     def send_pair_ack(self, peer_mac):
@@ -262,12 +272,11 @@ class ESPNowProtocol:
         msg = struct.pack(
             self.MSG_FORMAT,
             MessageType.PAIR_ACK,
-            self.sequence & 0xFF,
+            self.sequence,
             0,
             0
         )
 
-        self.sequence += 1
         success = self._send(msg)
 
         # Restore original peer if different
@@ -307,6 +316,9 @@ class ESPNowProtocol:
 
             msg_type, sequence, speed, direction = struct.unpack(self.MSG_FORMAT, msg)
 
+            # Increment receive counter on successful decode
+            self.rx_total += 1
+
             return {
                 'type': msg_type,
                 'sequence': sequence,
@@ -333,13 +345,17 @@ class ESPNowProtocol:
         try:
             if broadcast:
                 # Send to broadcast address
-                self.e.send(b'\xff\xff\xff\xff\xff\xff', msg)
+                self.e.send(self.BROADCAST_MAC, msg)
             elif self.peer_mac:
                 # Send to paired peer
                 self.e.send(self.peer_mac, msg)
             else:
                 print("No peer configured")
                 return False
+
+            # Increment counters on successful send
+            self.tx_total += 1
+            self.sequence = (self.sequence + 1) % 256
 
             return True
 

@@ -65,7 +65,6 @@ def test_sender():
         protocol.send_pair_request()
         print("Waiting for receiver to respond...")
         print("(Make sure receiver is running test_receiver())")
-        #time.sleep(2)
 
         # Listen for pair acknowledgment
         start_time = time.time()
@@ -102,9 +101,9 @@ def test_sender():
             protocol.send_control(speed, direction)
             msg_count += 1
 
-            # Print each message sent
-            print("SENT seq={} speed={} dir={}".format(
-                current_seq, speed, "FWD" if direction == 0 else "REV"
+            # Print each message sent with sequence and total
+            print("SENT seq={:3d} tx_total={:4d} speed={:3d} dir={}".format(
+                current_seq, protocol.tx_total, speed, "FWD" if direction == 0 else "REV"
             ))
 
             # Update speed (cycle 0-100)
@@ -118,7 +117,8 @@ def test_sender():
 
     except KeyboardInterrupt:
         print("\n\nTransmission stopped")
-        print("Total messages sent:", msg_count)
+        print("Total messages sent (tx_total):", protocol.tx_total)
+        print("Message count (local):", msg_count)
 
 
 def test_receiver():
@@ -166,8 +166,9 @@ def test_receiver():
 
                 # Handle message types
                 if msg['type'] == MessageType.CONTROL:
-                    print("RECV seq={} speed={} dir={} (total={} missed={})".format(
+                    print("RECV seq={:3d} rx_total={:4d} speed={:3d} dir={} (local={} missed={})".format(
                         msg['sequence'],
+                        protocol.rx_total,
                         msg['speed'],
                         "FWD" if msg['direction'] == 0 else "REV",
                         msg_count,
@@ -193,7 +194,8 @@ def test_receiver():
 
     except KeyboardInterrupt:
         print("\n\nReception stopped")
-        print("Total messages received:", msg_count)
+        print("Total messages received (rx_total):", protocol.rx_total)
+        print("Message count (local):", msg_count)
         print("Missed messages:", missed_messages)
         if msg_count > 0:
             loss_rate = (missed_messages / (msg_count + missed_messages)) * 100
@@ -257,7 +259,10 @@ def test_ping():
 
     if latencies:
         print("\n--- Ping Statistics ---")
-        print("Sent: 10, Received: {}".format(len(latencies)))
+        print("Sent (tx_total): {}, Received (rx_total): {}".format(
+            protocol.tx_total, protocol.rx_total
+        ))
+        print("Replies received: {}".format(len(latencies)))
         print("Min: {:.2f} ms".format(min(latencies)))
         print("Max: {:.2f} ms".format(max(latencies)))
         print("Avg: {:.2f} ms".format(sum(latencies) / len(latencies)))
@@ -295,11 +300,15 @@ def test_pong_responder():
                 # Send pong response
                 protocol.send_pong()
                 pong_count += 1
-                print("Pong sent ({})".format(pong_count))
+                print("Pong sent (rx_total={} tx_total={})".format(
+                    protocol.rx_total, protocol.tx_total
+                ))
 
     except KeyboardInterrupt:
         print("\nResponder stopped")
-        print("Total pongs sent:", pong_count)
+        print("Total pings received (rx_total):", protocol.rx_total)
+        print("Total pongs sent (tx_total):", protocol.tx_total)
+        print("Pong count (local):", pong_count)
 
 
 # Print menu

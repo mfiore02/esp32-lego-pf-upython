@@ -54,6 +54,11 @@ class MockESPNow:
         if mac in self.peers:
             self.peers.remove(mac)
 
+    def get_peers(self):
+        """Return list of peers in format [(mac, channel, ifidx, encrypt), ...]"""
+        # Return simplified format - just need MAC in first position
+        return [(peer, 0, 0, False) for peer in self.peers]
+
     def send(self, mac, msg):
         self.sent_messages.append((mac, msg))
 
@@ -305,6 +310,103 @@ class TestESPNowProtocol:
 
         receiver = ESPNowProtocol('receiver')
         assert receiver.device_type == 'receiver'
+
+    def test_counters_initialization(self):
+        """Test tx_total and rx_total initialize to 0."""
+        from espnow_protocol import ESPNowProtocol
+
+        protocol = ESPNowProtocol('controller')
+        assert protocol.tx_total == 0
+        assert protocol.rx_total == 0
+        assert protocol.sequence == 0
+
+    def test_tx_total_increments(self):
+        """Test tx_total increments on successful send."""
+        from espnow_protocol import ESPNowProtocol
+
+        protocol = ESPNowProtocol('controller')
+        protocol.init()
+        protocol.add_peer(b'\x11\x22\x33\x44\x55\x66')
+
+        # Send multiple messages
+        protocol.send_control(50, 0)
+        assert protocol.tx_total == 1
+
+        protocol.send_control(75, 1)
+        assert protocol.tx_total == 2
+
+        protocol.send_ping()
+        assert protocol.tx_total == 3
+
+        protocol.send_pong()
+        assert protocol.tx_total == 4
+
+    def test_rx_total_increments(self):
+        """Test rx_total increments on successful receive."""
+        from espnow_protocol import ESPNowProtocol, MessageType
+
+        protocol = ESPNowProtocol('receiver')
+        protocol.init()
+
+        # Queue multiple messages
+        msg1 = struct.pack('!BBBB', MessageType.CONTROL, 0, 50, 0)
+        msg2 = struct.pack('!BBBB', MessageType.CONTROL, 1, 75, 1)
+        msg3 = struct.pack('!BBBB', MessageType.PING, 2, 0, 0)
+
+        sender_mac = b'\xAA\xBB\xCC\xDD\xEE\xFF'
+        protocol.e.receive_queue.append((sender_mac, msg1))
+        protocol.e.receive_queue.append((sender_mac, msg2))
+        protocol.e.receive_queue.append((sender_mac, msg3))
+
+        # Receive messages
+        protocol.receive()
+        assert protocol.rx_total == 1
+
+        protocol.receive()
+        assert protocol.rx_total == 2
+
+        protocol.receive()
+        assert protocol.rx_total == 3
+
+    def test_tx_total_not_incremented_on_failed_send(self):
+        """Test tx_total doesn't increment when send fails."""
+        from espnow_protocol import ESPNowProtocol
+
+        protocol = ESPNowProtocol('controller')
+        protocol.init()
+        # No peer configured - send should fail
+
+        result = protocol.send_control(50, 0)
+        assert result is False
+        assert protocol.tx_total == 0
+        assert protocol.sequence == 0  # Sequence shouldn't increment either
+
+    def test_sequence_and_tx_total_independent(self):
+        """Test sequence wraps at 256 while tx_total continues unbounded."""
+        from espnow_protocol import ESPNowProtocol
+
+        protocol = ESPNowProtocol('controller')
+        protocol.init()
+        protocol.add_peer(b'\x11\x22\x33\x44\x55\x66')
+
+        # Set sequence near wraparound
+        protocol.sequence = 255
+
+        protocol.send_control(50, 0)
+        assert protocol.sequence == 0  # Wrapped to 0
+        assert protocol.tx_total == 1  # But total keeps counting
+
+        protocol.send_control(50, 0)
+        assert protocol.sequence == 1
+        assert protocol.tx_total == 2
+
+        # Verify we can go well beyond 256 messages
+        protocol.sequence = 255
+        protocol.tx_total = 500
+
+        protocol.send_control(50, 0)
+        assert protocol.sequence == 0  # Still wraps
+        assert protocol.tx_total == 501  # But total continues
 
 
 print("ESP-NOW protocol tests created successfully")
