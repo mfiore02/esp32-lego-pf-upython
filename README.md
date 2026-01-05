@@ -146,15 +146,15 @@ This project follows an **incremental, test-driven development** approach:
 2. ✅ `lib/button.py` - Debounced button input
 3. ✅ `lib/led.py` - LED pattern control
 4. ✅ `lib/potentiometer.py` - ADC with dead zone calibration
-5. ⬜ `lib/motor_driver.py` - TB6612 PWM control
+5. ✅ `lib/motor_driver.py` - TB6612 PWM control (hardware validated)
 
 #### Phase 2: Communication Layer
-6. ✅ `lib/espnow_protocol.py` - Message protocol and ESP-NOW wrapper
+6. ✅ `lib/espnow_protocol.py` - Message protocol and ESP-NOW wrapper (hardware validated)
 
 #### Phase 3: Application Logic
-7. ⬜ `controller/main.py` - Controller normal mode
-8. ⬜ `receiver/main.py` - Receiver normal mode
-9. ⬜ Pairing mode implementation (both devices)
+7. ✅ `controller/main.py` - Controller normal mode (untested)
+8. ✅ `receiver/main.py` - Receiver normal mode (untested)
+9. ⬜ End-to-end hardware validation and pairing flow testing
 
 #### Phase 4: Configuration & Deployment
 10. ⬜ `tools/cli.py` - USB-C serial configuration tool
