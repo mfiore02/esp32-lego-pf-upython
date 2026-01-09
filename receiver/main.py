@@ -6,14 +6,22 @@ This is the main application for the wireless receiver device that drives motors
 Hardware Setup:
     - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
     - Motor 2: PWM=GPIO4, IN1=GPIO5, IN2=GPIO6
+    - Pairing Button: GPIO9 (BOOT button, active low)
     - Status LED: GPIO8
     - ESP-NOW: WiFi interface
+
+Button Behavior:
+    - Held during power-up: Enter pairing mode
+    - Not used during normal operation
 
 Operation:
     - Listens for ESP-NOW control messages
     - Drives motors based on received speed/direction
-    - Automatically responds to pairing requests
-    - LED indicates status (on=receiving, blink=idle, off=error)
+    - Pairing modes:
+      * Button held during power-up: Waits for pairing request (proactive)
+      * During normal operation: Accepts pairing if not already paired (reactive)
+      * When paired: Ignores pairing requests (security)
+    - LED indicates status (on=receiving, fast blink=pairing, slow blink=idle)
     - Safety timeout stops motors if no messages received
 """
 
@@ -25,6 +33,7 @@ from machine import Pin, PWM
 if '/lib' not in sys.path:
     sys.path.insert(0, '/lib')
 
+from button import Button
 from motor_driver import MotorDriver, DualMotorDriver, MotorMode
 from espnow_protocol import ESPNowProtocol, MessageType
 from config_manager import ConfigManager
@@ -40,11 +49,15 @@ class ReceiverApp:
     # Controller sends at 20Hz (50ms period), timeout at 2.5x = 125ms
     SAFETY_TIMEOUT_MS = 125
 
-    # LED blink rate for idle state (Hz)
-    IDLE_BLINK_HZ = 1
+    # LED blink rate (Hz)
+    PAIRING_BLINK_HZ = 4  # Fast blink during pairing
+    IDLE_BLINK_HZ = 1     # Slow blink when idle
+
+    # Pairing timeout
+    PAIRING_TIMEOUT_SEC = 30
 
     def __init__(self):
-        """Initialize receiver hardware."""
+        """Initialize receiver hardware and check for pairing mode."""
         print("\n" + "="*50)
         print("ESP32 Lego Power Functions Receiver")
         print("="*50)
@@ -54,6 +67,10 @@ class ReceiverApp:
 
         # Initialize hardware
         print("\nInitializing hardware...")
+
+        # Pairing button on GPIO9 (BOOT button, active low with pull-up)
+        button_pin = Pin(9, Pin.IN, Pin.PULL_UP)
+        self.button = Button(button_pin, active_low=True)
 
         # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
         pwm1 = PWM(Pin(2), freq=1000, duty=0)
@@ -85,9 +102,21 @@ class ReceiverApp:
         self.active = False  # Receiving messages
         self.paired = False
         self.peer_mac = None
+        self.pairing_mode = False
 
-        # Load paired peer from config
-        self.load_paired_peer()
+        # Check if button is held during power-up for pairing mode
+        if self.button.is_pressed():
+            print("\n*** BUTTON HELD - ENTERING PAIRING MODE ***")
+            time.sleep_ms(100)  # Brief delay to confirm
+            if self.button.is_pressed():  # Double-check
+                self.pairing_mode = True
+                self.enter_pairing_mode()
+            else:
+                print("Button released too quickly, continuing to normal mode")
+
+        # Load paired peer from config if not in pairing mode
+        if not self.pairing_mode:
+            self.load_paired_peer()
 
         print("\nReceiver initialized")
         print("Paired:", "YES" if self.paired else "NO")
@@ -116,6 +145,65 @@ class ReceiverApp:
         else:
             print("No paired peer in configuration")
             self.paired = False
+
+    def enter_pairing_mode(self):
+        """
+        Enter pairing mode - wait for PAIR_REQUEST and respond.
+
+        LED blinks fast while waiting for pairing.
+        """
+        print("\n" + "="*50)
+        print("PAIRING MODE")
+        print("="*50)
+        print("\nWaiting for pairing request from controller...")
+        print("Timeout: {} seconds\n".format(self.PAIRING_TIMEOUT_SEC))
+
+        # Wait for PAIR_REQUEST with LED blinking
+        start_time = time.time()
+        led_state = False
+        last_blink = time.time()
+        blink_period = 1.0 / self.PAIRING_BLINK_HZ / 2  # Half period for toggle
+
+        while time.time() - start_time < self.PAIRING_TIMEOUT_SEC:
+            # Blink LED
+            if time.time() - last_blink > blink_period:
+                led_state = not led_state
+                self.led.value(led_state)
+                last_blink = time.time()
+
+            # Check for PAIR_REQUEST
+            msg = self.protocol.receive(timeout_ms=100)
+            if msg and msg['type'] == MessageType.PAIR_REQUEST:
+                # Got pairing request
+                self.peer_mac = msg['sender_mac']
+                peer_mac_str = ':'.join(['{:02X}'.format(b) for b in self.peer_mac])
+
+                print("\n*** PAIRING REQUEST RECEIVED ***")
+                print("From:", peer_mac_str)
+
+                # Send acknowledgment
+                self.protocol.send_pair_ack(self.peer_mac)
+                print("Sent PAIR_ACK")
+
+                # Add peer and save to config
+                self.protocol.add_peer(self.peer_mac)
+                self.config.set(self.CONFIG_PEER_MAC, peer_mac_str)
+                self.paired = True
+
+                print("Pairing saved to config")
+                print("*** PAIRING COMPLETE ***\n")
+
+                # LED on solid = paired
+                self.led.value(1)
+                time.sleep(2)  # Brief pause to show success
+                return
+
+        # Timeout
+        print("\n*** PAIRING TIMEOUT ***")
+        print("No controller paired")
+        print("Device will continue in unpaired mode\n")
+        self.led.value(0)  # LED off = not paired
+        self.paired = False
 
     def handle_pairing_request(self, sender_mac):
         """
@@ -185,14 +273,17 @@ class ReceiverApp:
         Main receiver loop.
 
         Listens for messages and drives motors accordingly.
-        Handles pairing requests automatically.
+        Handles pairing requests only when not already paired (security).
         Implements safety timeout.
         """
         print("\n" + "="*50)
         print("RECEIVER RUNNING")
         print("="*50)
         print("\nListening for messages...")
-        print("Pairing requests will be accepted automatically")
+        if self.paired:
+            print("Paired mode - pairing requests will be ignored")
+        else:
+            print("Unpaired mode - will accept first pairing request")
         print("Safety timeout: {} ms".format(self.SAFETY_TIMEOUT_MS))
         print("Press Ctrl+C to stop\n")
 
@@ -220,8 +311,12 @@ class ReceiverApp:
                             ))
 
                     elif msg['type'] == MessageType.PAIR_REQUEST:
-                        # Pairing request - respond automatically
-                        self.handle_pairing_request(msg['sender_mac'])
+                        # Pairing request - only accept if not already paired (security)
+                        if not self.paired:
+                            self.handle_pairing_request(msg['sender_mac'])
+                        else:
+                            # Already paired - ignore pairing requests
+                            print("WARNING: Ignoring pairing request (already paired)")
 
                     elif msg['type'] == MessageType.PING:
                         # Ping request - respond with pong
