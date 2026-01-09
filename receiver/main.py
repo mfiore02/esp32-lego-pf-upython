@@ -4,9 +4,9 @@ ESP32 Lego Power Functions Receiver Application
 This is the main application for the wireless receiver device that drives motors.
 
 Hardware Setup:
-    - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
-    - Motor 2: PWM=GPIO4, IN1=GPIO5, IN2=GPIO6
-    - Pairing Button: GPIO9 (BOOT button, active low)
+    - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
+    - Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
+    - Pairing Button: GPIO10 (active low, external button)
     - Status LED: GPIO8
     - ESP-NOW: WiFi interface
 
@@ -68,20 +68,20 @@ class ReceiverApp:
         # Initialize hardware
         print("\nInitializing hardware...")
 
-        # Pairing button on GPIO9 (BOOT button, active low with pull-up)
-        button_pin = Pin(9, Pin.IN, Pin.PULL_UP)
+        # Pairing button on GPIO10 (active low with pull-up)
+        button_pin = Pin(10, Pin.IN, Pin.PULL_UP)
         self.button = Button(button_pin, active_low=True)
 
-        # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
+        # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
         pwm1 = PWM(Pin(2), freq=1000, duty=0)
         in1_1 = Pin(3, Pin.OUT)
-        in2_1 = Pin(10, Pin.OUT)
+        in2_1 = Pin(4, Pin.OUT)
         motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
-        # Motor 2: PWM=GPIO4, IN1=GPIO5, IN2=GPIO6
-        pwm2 = PWM(Pin(4), freq=1000, duty=0)
-        in1_2 = Pin(5, Pin.OUT)
-        in2_2 = Pin(6, Pin.OUT)
+        # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
+        pwm2 = PWM(Pin(5), freq=1000, duty=0)
+        in1_2 = Pin(6, Pin.OUT)
+        in2_2 = Pin(7, Pin.OUT)
         motor2 = MotorDriver(pwm2, in1_2, in2_2)
 
         # Dual motor controller

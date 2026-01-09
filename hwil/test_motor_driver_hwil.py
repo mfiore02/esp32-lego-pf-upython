@@ -18,8 +18,8 @@ Expected behavior:
 
 Hardware setup:
     - TB6612FNG motor driver connected to ESP32
-    - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
-    - Motor 2: PWM=GPIO4, IN1=GPIO5, IN2=GPIO6
+    - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
+    - Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
     - Connect STBY pin to 3.3V (always enabled)
     - VCC to 3.3V, VM to motor power supply (2S LiPo ~7.4V)
     - Connect 2x DC motors to A01/A02 and B01/B02
@@ -46,11 +46,11 @@ def test_single_motor():
     print("="*50)
 
     # Configure Motor 1
-    # PWM on GPIO2, IN1 on GPIO3, IN2 on GPIO10
+    # PWM on GPIO2, IN1 on GPIO3, IN2 on GPIO4
     print("Configuring Motor 1...")
     pwm1 = PWM(Pin(2), freq=1000, duty=0)
     in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(10, Pin.OUT)
+    in2_1 = Pin(4, Pin.OUT)
 
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
@@ -110,7 +110,7 @@ def test_speed_ramp():
     print("Configuring Motor 1...")
     pwm1 = PWM(Pin(2), freq=1000, duty=0)
     in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(10, Pin.OUT)
+    in2_1 = Pin(4, Pin.OUT)
 
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
@@ -156,13 +156,13 @@ def test_dual_motors():
     # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
     pwm1 = PWM(Pin(2), freq=1000, duty=0)
     in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(10, Pin.OUT)
+    in2_1 = Pin(4, Pin.OUT)
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
-    # Motor 2: PWM=GPIO4, IN1=GPIO5, IN2=GPIO6
-    pwm2 = PWM(Pin(4), freq=1000, duty=0)
-    in1_2 = Pin(5, Pin.OUT)
-    in2_2 = Pin(6, Pin.OUT)
+    # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
+    pwm2 = PWM(Pin(5), freq=1000, duty=0)
+    in1_2 = Pin(6, Pin.OUT)
+    in2_2 = Pin(7, Pin.OUT)
     motor2 = MotorDriver(pwm2, in1_2, in2_2)
 
     dual = DualMotorDriver(motor1, motor2)
@@ -213,7 +213,7 @@ def test_motor_reversal():
     print("Configuring Motor 1...")
     pwm1 = PWM(Pin(2), freq=1000, duty=0)
     in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(10, Pin.OUT)
+    in2_1 = Pin(4, Pin.OUT)
 
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
@@ -272,7 +272,7 @@ def test_interactive():
     # Motor 1
     pwm1 = PWM(Pin(2), freq=1000, duty=0)
     in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(10, Pin.OUT)
+    in2_1 = Pin(4, Pin.OUT)
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
     # Motor 2

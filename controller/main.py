@@ -4,7 +4,7 @@ ESP32 Lego Power Functions Controller Application
 This is the main application for the wireless controller device.
 
 Hardware Setup:
-    - Button: GPIO9 (active low, internal pull-up)
+    - Button: GPIO10 (active low, internal pull-up)
     - Potentiometer: GPIO1 (ADC)
     - Status LED: GPIO8
     - ESP-NOW: WiFi interface
@@ -59,8 +59,8 @@ class ControllerApp:
         # Initialize hardware
         print("\nInitializing hardware...")
 
-        # Button on GPIO9 (active low with pull-up)
-        button_pin = Pin(9, Pin.IN, Pin.PULL_UP)
+        # Button on GPIO10 (active low with pull-up)
+        button_pin = Pin(10, Pin.IN, Pin.PULL_UP)
         self.button = Button(button_pin, active_low=True)
 
         # Potentiometer on GPIO1 (ADC)

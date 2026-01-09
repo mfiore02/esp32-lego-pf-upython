@@ -98,18 +98,21 @@ See `docs/lego_pf_controller_build_guide.pdf` for detailed wiring diagrams and a
 ### Controller
 | Function | GPIO | Notes |
 |----------|------|-------|
-| Potentiometer (ADC) | GPIO0 | Speed control |
-| Direction Button | GPIO1 | Toggle + pairing mode |
-| Status LED | GPIO2 | Forward indicator |
+| Potentiometer (ADC) | GPIO1 | Speed control |
+| Status LED | GPIO8 | Status indicator |
+| Direction Button | GPIO10 | Toggle direction + pairing mode |
 
 ### Receiver
 | Function | GPIO | Notes |
 |----------|------|-------|
-| Motor 1 PWM | GPIO2 | Speed control |
-| Motor 1 Direction | GPIO3 | TB6612 AIN1 |
-| Motor 2 PWM | GPIO4 | Speed control |
-| Motor 2 Direction | GPIO5 | TB6612 BIN1 |
-| Pairing Button | GPIO9 | BOOT button on most boards |
+| Motor 1 PWM | GPIO2 | TB6612 PWMA |
+| Motor 1 IN1 | GPIO3 | TB6612 AIN1 |
+| Motor 1 IN2 | GPIO4 | TB6612 AIN2 |
+| Motor 2 PWM | GPIO5 | TB6612 PWMB |
+| Motor 2 IN1 | GPIO6 | TB6612 BIN1 |
+| Motor 2 IN2 | GPIO7 | TB6612 BIN2 |
+| Status LED | GPIO8 | Status indicator |
+| Pairing Button | GPIO10 | External button (active low) |
 
 ## Configuration Format
 
