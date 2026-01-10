@@ -171,7 +171,10 @@ class ControllerApp:
                 # Add peer and save to config
                 self.protocol.add_peer(self.peer_mac)
                 self.config.set(self.CONFIG_PEER_MAC, peer_mac_str)
+                self.config.save()  # Persist to filesystem
                 self.paired = True
+
+                print("Pairing saved to config")
 
                 # LED on solid = paired
                 self.led.value(1)
