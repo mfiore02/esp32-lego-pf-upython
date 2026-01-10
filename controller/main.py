@@ -230,14 +230,16 @@ class ControllerApp:
 
                 # Read speed from potentiometer
                 self.speed = self.pot.read()
+                raw_speed = self.pot.read_raw()
 
                 # Send control message
                 self.protocol.send_control(self.speed, self.direction)
 
                 # Print status every 10 messages
                 if self.protocol.tx_total % 10 == 0:
-                    print("Speed: {:3d}%  Direction: {}  Messages sent: {}".format(
+                    print("Speed: {:3d}%  Raw: {:4d}  Direction: {}  Messages sent: {}".format(
                         self.speed,
+                        raw_speed,
                         "FWD" if self.direction == 0 else "REV",
                         self.protocol.tx_total
                     ))
