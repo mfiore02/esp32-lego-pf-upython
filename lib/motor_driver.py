@@ -124,6 +124,15 @@ class MotorDriver:
             Current speed (0-100)
         """
         return self._speed
+    
+    def get_pwm(self):
+        """
+        Get current PWM duty cycle.
+
+        Returns:
+            Current PWM duty (0-1023)
+        """
+        return self.pwm.duty()
 
     def get_mode(self):
         """

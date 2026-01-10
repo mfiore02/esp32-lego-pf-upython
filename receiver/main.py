@@ -179,29 +179,7 @@ class ReceiverApp:
             # Check for PAIR_REQUEST
             msg = self.protocol.receive(timeout_ms=100)
             if msg and msg['type'] == MessageType.PAIR_REQUEST:
-                # Got pairing request
-                self.peer_mac = msg['sender_mac']
-                peer_mac_str = ':'.join(['{:02X}'.format(b) for b in self.peer_mac])
-
-                print("\n*** PAIRING REQUEST RECEIVED ***")
-                print("From:", peer_mac_str)
-
-                # Send acknowledgment
-                self.protocol.send_pair_ack(self.peer_mac)
-                print("Sent PAIR_ACK")
-
-                # Add peer and save to config
-                self.protocol.add_peer(self.peer_mac)
-                self.config.set(self.CONFIG_PEER_MAC, peer_mac_str)
-                self.config.save()  # Persist to filesystem
-                self.paired = True
-
-                print("Pairing saved to config")
-                print("*** PAIRING COMPLETE ***\n")
-
-                # LED on solid = paired
-                self.led.value(1)
-                time.sleep(2)  # Brief pause to show success
+                self.handle_pairing_request(msg['sender_mac'])
                 return
 
         # Timeout
@@ -218,6 +196,7 @@ class ReceiverApp:
         Args:
             sender_mac: MAC address of requesting controller
         """
+        self.peer_mac = sender_mac
         peer_mac_str = ':'.join(['{:02X}'.format(b) for b in sender_mac])
 
         print("\n*** PAIRING REQUEST ***")
@@ -227,14 +206,18 @@ class ReceiverApp:
         self.protocol.send_pair_ack(sender_mac)
         print("Sent PAIR_ACK")
 
-        # Add as peer and save to config
-        self.protocol.add_peer(sender_mac)
-        self.peer_mac = sender_mac
+        # Add peer and save to config
+        self.protocol.add_peer(self.peer_mac)
+        self.config.set(self.CONFIG_PEER_MAC, peer_mac_str)
+        self.config.save()  # Persist to filesystem
         self.paired = True
 
-        self.config.set(self.CONFIG_PEER_MAC, peer_mac_str)
         print("Pairing saved to config")
         print("*** PAIRING COMPLETE ***\n")
+
+        # LED on solid = paired
+        self.led.value(1)
+        time.sleep(2)  # Brief pause to show success
 
     def handle_control_message(self, msg):
         """
@@ -304,14 +287,16 @@ class ReceiverApp:
                 msg = self.protocol.receive(timeout_ms=0)
 
                 if msg:
-                    if msg['type'] == MessageType.CONTROL:
+                    if (msg['type'] == MessageType.CONTROL) and self.paired:
                         # Control message - drive motors
                         self.handle_control_message(msg)
 
                         # Print status every 20 messages
                         if self.protocol.rx_total % 20 == 0:
-                            print("Speed: {:3d}%  Direction: {}  Messages received: {}".format(
+                            print("Speed: {:3d}%  Motor 1: {:4d}  Motor 2: {:4d}  Direction: {}  Messages received: {}".format(
                                 msg['speed'],
+                                self.motors.motor1.get_pwm(),
+                                self.motors.motor2.get_pwm(),
                                 "FWD" if msg['direction'] == 0 else "REV",
                                 self.protocol.rx_total
                             ))
@@ -359,5 +344,6 @@ class ReceiverApp:
 
 # Create and run receiver
 if __name__ == "__main__":
+    time.sleep_ms(3000) # Delay to allow serial monitor to connect
     receiver = ReceiverApp()
     receiver.run()

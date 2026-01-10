@@ -269,5 +269,6 @@ class ControllerApp:
 
 # Create and run controller
 if __name__ == "__main__":
+    time.sleep_ms(3000) # Delay to allow serial monitor to connect
     controller = ControllerApp()
     controller.run()

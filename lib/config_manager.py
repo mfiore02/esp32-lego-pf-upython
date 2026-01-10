@@ -32,9 +32,9 @@ class ConfigManager:
             "paired": False,
             "train_mac": None,
             "pot_calibration": {
-                "min": 500,
+                "min": 0,
                 "max": 3995,
-                "zero_band": 50
+                "zero_band": 100
             }
         },
         "receiver": {
@@ -43,7 +43,7 @@ class ConfigManager:
             "paired": False,
             "controller_mac": None,
             "motor_config": {
-                "deadband": 10,
+                "deadband": 0,
                 "reverse_motor1": False,
                 "reverse_motor2": False
             }
