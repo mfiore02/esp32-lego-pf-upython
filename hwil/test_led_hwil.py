@@ -17,9 +17,9 @@ Expected behavior:
     - Serial output describes current pattern
 
 Hardware setup:
-    - Controller: LED on GPIO2 (with 1K resistor to ground)
-    - Or any GPIO with an LED connected (active high)
-    - Can also use onboard LED if available
+    - Controller: LED on GPIO8 (with 1K resistor to ground)
+    - Receiver: LED on GPIO8 (with 1K resistor to ground)
+    - Status LED connected to GPIO8 (active high)
 """
 
 import sys
@@ -40,9 +40,8 @@ def test_all_patterns():
     print("LED HWIL Test - Pattern Demo")
     print("="*50)
 
-    # Configure LED pin - change GPIO number as needed
-    # GPIO2 for controller status LED
-    LED_GPIO = 2
+    # Configure LED pin - GPIO8 for both controller and receiver status LED
+    LED_GPIO = 8
 
     print("Configuring LED on GPIO", LED_GPIO)
     pin = Pin(LED_GPIO, Pin.OUT)
@@ -101,7 +100,7 @@ def test_interactive():
     print("LED Interactive Test")
     print("="*50)
 
-    LED_GPIO = 2
+    LED_GPIO = 8  # Controller/Receiver status LED
 
     print("Configuring LED on GPIO", LED_GPIO)
     pin = Pin(LED_GPIO, Pin.OUT)
@@ -145,7 +144,7 @@ def test_timing_accuracy():
     print("LED Timing Accuracy Test")
     print("="*50)
 
-    LED_GPIO = 2
+    LED_GPIO = 8  # Controller/Receiver status LED
 
     print("Configuring LED on GPIO", LED_GPIO)
     pin = Pin(LED_GPIO, Pin.OUT)

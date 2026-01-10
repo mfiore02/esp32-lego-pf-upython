@@ -17,9 +17,9 @@ Expected behavior:
     - Multiple presses: Each detected separately
 
 Hardware setup:
-    - Controller: Button on GPIO1 (with pull-up, active low)
-    - Receiver: Button on GPIO9/BOOT (with pull-up, active low)
-    - Or any GPIO with a button connected (active low with pull-up)
+    - Controller: Button on GPIO10 (with pull-up, active low)
+    - Receiver: Button on GPIO10 (with pull-up, active low)
+    - External button connected to GPIO10 (active low with pull-up)
 """
 
 import sys
@@ -40,9 +40,8 @@ def test_button():
     print("Button HWIL Test")
     print("="*50)
 
-    # Configure button pin - change GPIO number as needed
-    # GPIO1 for controller, GPIO9 for receiver (BOOT button)
-    BUTTON_GPIO = 1  # Change to 1 for controller testing
+    # Configure button pin - GPIO10 for both controller and receiver
+    BUTTON_GPIO = 10
 
     print("Configuring button on GPIO", BUTTON_GPIO)
     pin = Pin(BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
@@ -111,7 +110,7 @@ def test_debouncing():
     print("Debouncing Test")
     print("="*50)
 
-    BUTTON_GPIO = 9  # Change as needed
+    BUTTON_GPIO = 10  # Controller/Receiver button
 
     print("Configuring button on GPIO", BUTTON_GPIO)
     pin = Pin(BUTTON_GPIO, Pin.IN, Pin.PULL_UP)

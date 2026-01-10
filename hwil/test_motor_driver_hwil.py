@@ -269,16 +269,16 @@ def test_interactive():
 
     print("Configuring motors...")
 
-    # Motor 1
+    # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
     pwm1 = PWM(Pin(2), freq=1000, duty=0)
     in1_1 = Pin(3, Pin.OUT)
     in2_1 = Pin(4, Pin.OUT)
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
-    # Motor 2
-    pwm2 = PWM(Pin(4), freq=1000, duty=0)
-    in1_2 = Pin(5, Pin.OUT)
-    in2_2 = Pin(6, Pin.OUT)
+    # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
+    pwm2 = PWM(Pin(5), freq=1000, duty=0)
+    in1_2 = Pin(6, Pin.OUT)
+    in2_2 = Pin(7, Pin.OUT)
     motor2 = MotorDriver(pwm2, in1_2, in2_2)
 
     dual = DualMotorDriver(motor1, motor2)

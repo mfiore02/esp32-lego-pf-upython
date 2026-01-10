@@ -17,8 +17,8 @@ Expected behavior:
     - Updates as you turn the potentiometer
 
 Hardware setup:
-    - Controller: Potentiometer on GPIO0 (ADC1_CH0)
-    - Connect potentiometer: one end to 3.3V, other to GND, wiper to GPIO0
+    - Controller: Potentiometer on GPIO1 (ADC)
+    - Connect potentiometer: one end to 3.3V, other to GND, wiper to GPIO1
     - 10K linear potentiometer recommended
 """
 
@@ -40,8 +40,8 @@ def test_continuous_read():
     print("Potentiometer Continuous Read Test")
     print("="*50)
 
-    # Configure ADC - GPIO0 for controller
-    POT_GPIO = 0
+    # Configure ADC - GPIO1 for controller
+    POT_GPIO = 1
 
     print("Configuring potentiometer on GPIO", POT_GPIO)
     adc = ADC(Pin(POT_GPIO))
@@ -87,7 +87,7 @@ def test_calibration_helper():
     print("Potentiometer Calibration Helper")
     print("="*50)
 
-    POT_GPIO = 0
+    POT_GPIO = 1  # Controller potentiometer
 
     print("Configuring ADC on GPIO", POT_GPIO)
     adc = ADC(Pin(POT_GPIO))
@@ -146,7 +146,7 @@ def test_zero_band():
     print("Potentiometer Zero Band Test")
     print("="*50)
 
-    POT_GPIO = 0
+    POT_GPIO = 1  # Controller potentiometer
 
     print("Configuring potentiometer on GPIO", POT_GPIO)
     adc = ADC(Pin(POT_GPIO))
@@ -200,7 +200,7 @@ def test_with_custom_calibration():
     print("Potentiometer Test with Custom Calibration")
     print("="*50)
 
-    POT_GPIO = 0
+    POT_GPIO = 1  # Controller potentiometer
 
     # EDIT THESE VALUES after running calibration helper
     CUSTOM_MIN = 100
