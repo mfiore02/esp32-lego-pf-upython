@@ -221,7 +221,7 @@ class ControllerApp:
                 self.button.update()
 
                 # Check for button press (direction toggle)
-                if self.button.is_pressed():
+                if self.button.was_pressed():
                     self.direction = 1 - self.direction
                     print("Direction toggled:", "FORWARD" if self.direction == 0 else "REVERSE")
 
