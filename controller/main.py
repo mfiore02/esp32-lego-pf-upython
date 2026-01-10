@@ -221,12 +221,12 @@ class ControllerApp:
                 self.button.update()
 
                 # Check for button press (direction toggle)
-                if self.button.pressed():
+                if self.button.is_pressed():
                     self.direction = 1 - self.direction
                     print("Direction toggled:", "FORWARD" if self.direction == 0 else "REVERSE")
 
                 # Read speed from potentiometer
-                self.speed = self.pot.read_percent()
+                self.speed = self.pot.read()
 
                 # Send control message
                 self.protocol.send_control(self.speed, self.direction)
