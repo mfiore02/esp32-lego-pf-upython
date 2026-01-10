@@ -155,13 +155,14 @@ This project follows an **incremental, test-driven development** approach:
 6. ✅ `lib/espnow_protocol.py` - Message protocol and ESP-NOW wrapper (hardware validated)
 
 #### Phase 3: Application Logic
-7. ✅ `controller/main.py` - Controller normal mode (untested)
-8. ✅ `receiver/main.py` - Receiver normal mode (untested)
-9. ⬜ End-to-end hardware validation and pairing flow testing
+7. ✅ `controller/main.py` - Controller application with pairing and control loop
+8. ✅ `receiver/main.py` - Receiver application with motor control and safety timeout
+9. ✅ End-to-end hardware validation and pairing flow testing (**SYSTEM WORKING!**)
 
 #### Phase 4: Configuration & Deployment
-10. ⬜ `tools/cli.py` - USB-C serial configuration tool
-11. ⬜ Deployment scripts and documentation
+10. ✅ Deployment scripts (controller, receiver, HWIL)
+11. ⬜ `tools/cli.py` - USB-C serial configuration tool (optional)
+12. ⬜ Final documentation and build guide updates
 
 ## Installation & Deployment
 
