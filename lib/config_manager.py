@@ -20,6 +20,10 @@ class ConfigManager:
     VERSION = 1
     CONFIG_DIR = "/config"
 
+    # Device type constants
+    DEVICE_CONTROLLER = "controller"
+    DEVICE_RECEIVER = "receiver"
+
     # Default configurations for each device type
     DEFAULTS = {
         "controller": {

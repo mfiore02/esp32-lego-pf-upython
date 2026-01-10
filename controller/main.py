@@ -54,7 +54,7 @@ class ControllerApp:
         print("="*50)
 
         # Initialize configuration manager
-        self.config = ConfigManager()
+        self.config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
 
         # Initialize hardware
         print("\nInitializing hardware...")

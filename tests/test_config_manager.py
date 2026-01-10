@@ -38,7 +38,7 @@ class TestConfigManagerFS:
         """Test controller default configuration."""
         from config_manager import ConfigManager
 
-        config = ConfigManager("controller")
+        config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         assert config.get("device_type") == "controller"
         assert config.get("paired") is False
         assert config.get("train_mac") is None
@@ -48,7 +48,7 @@ class TestConfigManagerFS:
         """Test receiver default configuration."""
         from config_manager import ConfigManager
 
-        config = ConfigManager("receiver")
+        config = ConfigManager(ConfigManager.DEVICE_RECEIVER)
         assert config.get("device_type") == "receiver"
         assert config.get("paired") is False
         assert config.get("controller_mac") is None
@@ -58,13 +58,13 @@ class TestConfigManagerFS:
         from config_manager import ConfigManager
 
         # Create and modify config
-        config1 = ConfigManager("controller")
+        config1 = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         config1.set("paired", True)
         config1.set("train_mac", [0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF])
         config1.save()
 
         # Load in new instance
-        config2 = ConfigManager("controller")
+        config2 = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         assert config2.get("paired") is True
         assert config2.get("train_mac") == [0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF]
 
@@ -72,7 +72,7 @@ class TestConfigManagerFS:
         """Test nested key access."""
         from config_manager import ConfigManager
 
-        config = ConfigManager("controller")
+        config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         config.set("pot_calibration.min", 250)
         assert config.get("pot_calibration.min") == 250
 
@@ -80,7 +80,7 @@ class TestConfigManagerFS:
         """Test erasing configuration."""
         from config_manager import ConfigManager
 
-        config = ConfigManager("controller")
+        config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         config.set("paired", True)
         config.save()
 
@@ -92,13 +92,13 @@ class TestConfigManagerFS:
         from config_manager import ConfigManager
 
         # Write with first instance
-        config1 = ConfigManager("controller")
+        config1 = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         config1.set("paired", True)
         config1.set("pot_calibration.max", 4000)
         config1.save()
 
         # Read with second instance
-        config2 = ConfigManager("controller")
+        config2 = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         assert config2.get("paired") is True
         assert config2.get("pot_calibration.max") == 4000
 
@@ -106,7 +106,7 @@ class TestConfigManagerFS:
         """Test get_all method."""
         from config_manager import ConfigManager
 
-        config = ConfigManager("controller")
+        config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
         all_config = config.get_all()
         assert isinstance(all_config, dict)
         assert "device_type" in all_config

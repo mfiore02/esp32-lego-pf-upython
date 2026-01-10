@@ -35,13 +35,13 @@ print("="*50)
 
 if cleanup_mode:
     print("\nCLEANUP MODE - Erasing test data...")
-    config = ConfigManager("controller")
+    config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
     config.erase()
     print("✓ Test data erased")
     print("\nRun test again to restart from scratch")
 else:
     # Load config
-    config = ConfigManager("controller")
+    config = ConfigManager(ConfigManager.DEVICE_CONTROLLER)
 
     # Check for test data
     paired = config.get("paired")

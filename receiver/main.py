@@ -63,7 +63,7 @@ class ReceiverApp:
         print("="*50)
 
         # Initialize configuration manager
-        self.config = ConfigManager()
+        self.config = ConfigManager(ConfigManager.DEVICE_RECEIVER)
 
         # Initialize hardware
         print("\nInitializing hardware...")
