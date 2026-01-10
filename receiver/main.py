@@ -105,9 +105,14 @@ class ReceiverApp:
         self.pairing_mode = False
 
         # Check if button is held during power-up for pairing mode
+        # Wait for debounce period, then call update() to read debounced state
+        time.sleep_ms(60)  # Wait longer than 50ms debounce time
+        self.button.update()  # Now debounced state will be set if button is still pressed
+
         if self.button.is_pressed():
             print("\n*** BUTTON HELD - ENTERING PAIRING MODE ***")
             time.sleep_ms(100)  # Brief delay to confirm
+            self.button.update()
             if self.button.is_pressed():  # Double-check
                 self.pairing_mode = True
                 self.enter_pairing_mode()
