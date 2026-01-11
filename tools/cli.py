@@ -263,7 +263,10 @@ class ESP32CLI:
 
     def cmd_help(self):
         """Display help information."""
-        help_text = """
+        import platform
+        eof_key = "Ctrl+Z" if platform.system() == "Windows" else "Ctrl+D"
+
+        help_text = f"""
 Available commands:
 
   config.show()                    Display entire configuration
@@ -275,7 +278,7 @@ Available commands:
   config.erase()                   Erase config file
 
   help                             Show this help
-  exit() or Ctrl+D                 Exit CLI
+  exit() or {eof_key}              Exit CLI
 
 Examples:
   config.set('pot_calibration.min', 150)
@@ -376,8 +379,11 @@ Keys support dot notation (e.g., 'pot_calibration.min')
         except ImportError:
             pass  # readline not available on Windows without extra setup
 
+        import platform
+        eof_key = "Ctrl+Z then Enter" if platform.system() == "Windows" else "Ctrl+D"
+
         print("ESP32 Configuration CLI")
-        print("Type 'help' for available commands, 'exit' to quit\n")
+        print(f"Type 'help' for available commands, 'exit' or {eof_key} to quit\n")
 
         while True:
             try:
@@ -386,7 +392,7 @@ Keys support dot notation (e.g., 'pot_calibration.min')
                     break
 
             except EOFError:
-                # Ctrl+D
+                # Ctrl+Z on Windows, Ctrl+D on Unix
                 print()  # Newline for clean exit
                 break
             except KeyboardInterrupt:
