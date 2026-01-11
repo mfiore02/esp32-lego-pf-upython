@@ -4,6 +4,7 @@ ESP32 Lego Power Functions Controller Application
 This is the main application for the wireless controller device.
 
 Hardware Setup:
+    See lib/hardware.py for complete GPIO pin assignments and hardware configuration.
     - Button: GPIO10 (active low, internal pull-up)
     - Potentiometer: GPIO1 (ADC)
     - Status LED: GPIO8
@@ -32,6 +33,7 @@ from button import Button
 from potentiometer import Potentiometer
 from espnow_protocol import ESPNowProtocol, MessageType
 from config_manager import ConfigManager
+import hardware
 
 
 class ControllerApp:
@@ -40,9 +42,9 @@ class ControllerApp:
     # Configuration keys
     CONFIG_PEER_MAC = 'peer_mac'
 
-    # Control loop rate (Hz)
-    CONTROL_RATE_HZ = 20
-    CONTROL_PERIOD_MS = int(1000 / CONTROL_RATE_HZ)
+    # Control loop rate (Hz) - from hardware config
+    CONTROL_RATE_HZ = hardware.TX_RATE_HZ
+    CONTROL_PERIOD_MS = hardware.TX_PERIOD_MS
 
     # Pairing timeout
     PAIRING_TIMEOUT_SEC = 30
@@ -59,17 +61,17 @@ class ControllerApp:
         # Initialize hardware
         print("\nInitializing hardware...")
 
-        # Button on GPIO10 (active low with pull-up)
-        button_pin = Pin(10, Pin.IN, Pin.PULL_UP)
-        self.button = Button(button_pin, active_low=True)
+        # Button (active low with pull-up)
+        button_pin = Pin(hardware.BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
+        self.button = Button(button_pin, active_low=hardware.BUTTON_ACTIVE_LOW)
 
-        # Potentiometer on GPIO1 (ADC)
-        adc = ADC(Pin(1))
+        # Potentiometer (ADC)
+        adc = ADC(Pin(hardware.POT_GPIO))
         adc.atten(ADC.ATTN_11DB)  # Full 0-3.3V range
         self.pot = Potentiometer(adc)
 
-        # Status LED on GPIO8
-        self.led = Pin(8, Pin.OUT)
+        # Status LED
+        self.led = Pin(hardware.LED_GPIO, Pin.OUT)
         self.led.value(0)  # Start off
 
         # ESP-NOW protocol

@@ -128,11 +128,11 @@ mpremote connect COM3 fs cp lib/button.py :/lib/button.py
 mpremote connect COM3 fs cp lib/led.py :/lib/led.py
 mpremote connect COM3 fs cp lib/potentiometer.py :/lib/potentiometer.py
 mpremote connect COM3 fs cp lib/espnow_protocol.py :/lib/espnow_protocol.py
+mpremote connect COM3 fs cp lib/hardware.py :/lib/hardware.py
 
 # Copy controller app
 mpremote connect COM3 fs cp controller/boot.py :boot.py
 mpremote connect COM3 fs cp controller/main.py :main.py
-mpremote connect COM3 fs cp controller/hardware.py :hardware.py
 
 # Reset
 mpremote connect COM3 reset
@@ -146,11 +146,11 @@ mpremote connect COM3 fs cp lib/config_manager.py :/lib/config_manager.py
 mpremote connect COM3 fs cp lib/button.py :/lib/button.py
 mpremote connect COM3 fs cp lib/motor_driver.py :/lib/motor_driver.py
 mpremote connect COM3 fs cp lib/espnow_protocol.py :/lib/espnow_protocol.py
+mpremote connect COM3 fs cp lib/hardware.py :/lib/hardware.py
 
 # Copy receiver app
 mpremote connect COM3 fs cp receiver/boot.py :boot.py
 mpremote connect COM3 fs cp receiver/main.py :main.py
-mpremote connect COM3 fs cp receiver/hardware.py :hardware.py
 
 # Reset
 mpremote connect COM3 reset

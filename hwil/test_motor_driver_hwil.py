@@ -17,6 +17,7 @@ Expected behavior:
     - Tests both motor channels
 
 Hardware setup:
+    See lib/hardware.py for GPIO pin assignments.
     - TB6612FNG motor driver connected to ESP32
     - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
     - Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
@@ -36,6 +37,7 @@ if '/lib' not in sys.path:
     sys.path.insert(0, '/lib')
 
 from motor_driver import MotorDriver, DualMotorDriver, MotorMode
+import hardware
 
 
 def test_single_motor():
@@ -45,12 +47,13 @@ def test_single_motor():
     print("Single Motor Test")
     print("="*50)
 
-    # Configure Motor 1
-    # PWM on GPIO2, IN1 on GPIO3, IN2 on GPIO4
+    # Configure Motor 1 - from hardware config
     print("Configuring Motor 1...")
-    pwm1 = PWM(Pin(2), freq=1000, duty=0)
-    in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(4, Pin.OUT)
+    print("  PWM={}, IN1={}, IN2={}".format(
+        hardware.MOTOR1_PWM_GPIO, hardware.MOTOR1_IN1_GPIO, hardware.MOTOR1_IN2_GPIO))
+    pwm1 = PWM(Pin(hardware.MOTOR1_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_1 = Pin(hardware.MOTOR1_IN1_GPIO, Pin.OUT)
+    in2_1 = Pin(hardware.MOTOR1_IN2_GPIO, Pin.OUT)
 
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
@@ -108,9 +111,9 @@ def test_speed_ramp():
     print("="*50)
 
     print("Configuring Motor 1...")
-    pwm1 = PWM(Pin(2), freq=1000, duty=0)
-    in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(4, Pin.OUT)
+    pwm1 = PWM(Pin(hardware.MOTOR1_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_1 = Pin(hardware.MOTOR1_IN1_GPIO, Pin.OUT)
+    in2_1 = Pin(hardware.MOTOR1_IN2_GPIO, Pin.OUT)
 
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
@@ -153,16 +156,16 @@ def test_dual_motors():
 
     print("Configuring Motor 1 and Motor 2...")
 
-    # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO10
-    pwm1 = PWM(Pin(2), freq=1000, duty=0)
-    in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(4, Pin.OUT)
+    # Motor 1 - from hardware config
+    pwm1 = PWM(Pin(hardware.MOTOR1_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_1 = Pin(hardware.MOTOR1_IN1_GPIO, Pin.OUT)
+    in2_1 = Pin(hardware.MOTOR1_IN2_GPIO, Pin.OUT)
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
-    # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
-    pwm2 = PWM(Pin(5), freq=1000, duty=0)
-    in1_2 = Pin(6, Pin.OUT)
-    in2_2 = Pin(7, Pin.OUT)
+    # Motor 2 - from hardware config
+    pwm2 = PWM(Pin(hardware.MOTOR2_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_2 = Pin(hardware.MOTOR2_IN1_GPIO, Pin.OUT)
+    in2_2 = Pin(hardware.MOTOR2_IN2_GPIO, Pin.OUT)
     motor2 = MotorDriver(pwm2, in1_2, in2_2)
 
     dual = DualMotorDriver(motor1, motor2)
@@ -211,9 +214,9 @@ def test_motor_reversal():
     print("="*50)
 
     print("Configuring Motor 1...")
-    pwm1 = PWM(Pin(2), freq=1000, duty=0)
-    in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(4, Pin.OUT)
+    pwm1 = PWM(Pin(hardware.MOTOR1_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_1 = Pin(hardware.MOTOR1_IN1_GPIO, Pin.OUT)
+    in2_1 = Pin(hardware.MOTOR1_IN2_GPIO, Pin.OUT)
 
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
@@ -269,16 +272,16 @@ def test_interactive():
 
     print("Configuring motors...")
 
-    # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
-    pwm1 = PWM(Pin(2), freq=1000, duty=0)
-    in1_1 = Pin(3, Pin.OUT)
-    in2_1 = Pin(4, Pin.OUT)
+    # Motor 1 - from hardware config
+    pwm1 = PWM(Pin(hardware.MOTOR1_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_1 = Pin(hardware.MOTOR1_IN1_GPIO, Pin.OUT)
+    in2_1 = Pin(hardware.MOTOR1_IN2_GPIO, Pin.OUT)
     motor1 = MotorDriver(pwm1, in1_1, in2_1)
 
-    # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
-    pwm2 = PWM(Pin(5), freq=1000, duty=0)
-    in1_2 = Pin(6, Pin.OUT)
-    in2_2 = Pin(7, Pin.OUT)
+    # Motor 2 - from hardware config
+    pwm2 = PWM(Pin(hardware.MOTOR2_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+    in1_2 = Pin(hardware.MOTOR2_IN1_GPIO, Pin.OUT)
+    in2_2 = Pin(hardware.MOTOR2_IN2_GPIO, Pin.OUT)
     motor2 = MotorDriver(pwm2, in1_2, in2_2)
 
     dual = DualMotorDriver(motor1, motor2)

@@ -4,6 +4,7 @@ ESP32 Lego Power Functions Receiver Application
 This is the main application for the wireless receiver device that drives motors.
 
 Hardware Setup:
+    See lib/hardware.py for complete GPIO pin assignments and hardware configuration.
     - Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
     - Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
     - Pairing Button: GPIO10 (active low, external button)
@@ -33,6 +34,7 @@ from machine import Pin, PWM
 if '/lib' not in sys.path:
     sys.path.insert(0, '/lib')
 
+import hardware
 from button import Button
 from motor_driver import MotorDriver, DualMotorDriver, MotorMode
 from espnow_protocol import ESPNowProtocol, MessageType
@@ -45,16 +47,15 @@ class ReceiverApp:
     # Configuration keys
     CONFIG_PEER_MAC = 'peer_mac'
 
-    # Safety timeout - stop motors if no messages received (ms)
-    # Controller sends at 20Hz (50ms period), timeout at 2.5x = 125ms
-    SAFETY_TIMEOUT_MS = 125
+    # Safety timeout - from hardware config
+    SAFETY_TIMEOUT_MS = hardware.SAFETY_TIMEOUT_MS
 
-    # LED blink rate (Hz)
-    PAIRING_BLINK_HZ = 4  # Fast blink during pairing
-    IDLE_BLINK_HZ = 1     # Slow blink when idle
+    # LED blink rate (Hz) - from hardware config
+    PAIRING_BLINK_HZ = hardware.PAIRING_BLINK_HZ
+    IDLE_BLINK_HZ = hardware.IDLE_BLINK_HZ
 
-    # Pairing timeout
-    PAIRING_TIMEOUT_SEC = 30
+    # Pairing timeout - from hardware config
+    PAIRING_TIMEOUT_SEC = hardware.PAIRING_TIMEOUT_SEC
 
     def __init__(self):
         """Initialize receiver hardware and check for pairing mode."""
@@ -68,9 +69,9 @@ class ReceiverApp:
         # Initialize hardware
         print("\nInitializing hardware...")
 
-        # Pairing button on GPIO10 (active low with pull-up)
-        button_pin = Pin(10, Pin.IN, Pin.PULL_UP)
-        self.button = Button(button_pin, active_low=True)
+        # Pairing button (active low with pull-up)
+        button_pin = Pin(hardware.BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
+        self.button = Button(button_pin, active_low=hardware.BUTTON_ACTIVE_LOW)
 
         # Load motor configuration from config manager
         motor_cfg = self.config.get('motor_config', {})
@@ -82,19 +83,19 @@ class ReceiverApp:
         print("Motor config: deadband={}, reverse=[{},{}], max_speed={}%".format(
             deadband, reverse_m1, reverse_m2, max_speed))
 
-        # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
-        pwm1 = PWM(Pin(2), freq=1000, duty=0)
-        in1_1 = Pin(3, Pin.OUT)
-        in2_1 = Pin(4, Pin.OUT)
+        # Motor 1 (Channel A)
+        pwm1 = PWM(Pin(hardware.MOTOR1_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+        in1_1 = Pin(hardware.MOTOR1_IN1_GPIO, Pin.OUT)
+        in2_1 = Pin(hardware.MOTOR1_IN2_GPIO, Pin.OUT)
         motor1 = MotorDriver(pwm1, in1_1, in2_1,
                              reverse=reverse_m1,
                              deadband=deadband,
                              max_speed=max_speed)
 
-        # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
-        pwm2 = PWM(Pin(5), freq=1000, duty=0)
-        in1_2 = Pin(6, Pin.OUT)
-        in2_2 = Pin(7, Pin.OUT)
+        # Motor 2 (Channel B)
+        pwm2 = PWM(Pin(hardware.MOTOR2_PWM_GPIO), freq=hardware.MOTOR_PWM_FREQ, duty=0)
+        in1_2 = Pin(hardware.MOTOR2_IN1_GPIO, Pin.OUT)
+        in2_2 = Pin(hardware.MOTOR2_IN2_GPIO, Pin.OUT)
         motor2 = MotorDriver(pwm2, in1_2, in2_2,
                              reverse=reverse_m2,
                              deadband=deadband,
@@ -103,8 +104,8 @@ class ReceiverApp:
         # Dual motor controller
         self.motors = DualMotorDriver(motor1, motor2)
 
-        # Status LED on GPIO8
-        self.led = Pin(8, Pin.OUT)
+        # Status LED
+        self.led = Pin(hardware.LED_GPIO, Pin.OUT)
         self.led.value(0)  # Start off
 
         # ESP-NOW protocol

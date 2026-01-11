@@ -17,7 +17,8 @@ Expected behavior:
     - Updates as you turn the potentiometer
 
 Hardware setup:
-    - Controller: Potentiometer on GPIO1 (ADC)
+    See lib/hardware.py for GPIO pin assignments.
+    - Potentiometer on GPIO1 (ADC)
     - Connect potentiometer: one end to 3.3V, other to GND, wiper to GPIO1
     - 10K linear potentiometer recommended
 """
@@ -31,6 +32,7 @@ if '/lib' not in sys.path:
     sys.path.insert(0, '/lib')
 
 from potentiometer import Potentiometer
+import hardware
 
 
 def test_continuous_read():
@@ -40,19 +42,21 @@ def test_continuous_read():
     print("Potentiometer Continuous Read Test")
     print("="*50)
 
-    # Configure ADC - GPIO1 for controller
-    POT_GPIO = 1
-
-    print("Configuring potentiometer on GPIO", POT_GPIO)
-    adc = ADC(Pin(POT_GPIO))
+    # Configure ADC - from hardware config
+    print("Configuring potentiometer on GPIO", hardware.POT_GPIO)
+    adc = ADC(Pin(hardware.POT_GPIO))
     adc.atten(ADC.ATTN_11DB)  # Full 0-3.3V range
     adc.width(ADC.WIDTH_12BIT)  # 12-bit resolution (0-4095)
 
-    # Create potentiometer with default calibration
-    pot = Potentiometer(adc, min_val=100, max_val=3995, zero_band=50)
+    # Create potentiometer with default calibration from hardware config
+    pot = Potentiometer(adc,
+                        min_val=hardware.DEFAULT_POT_MIN,
+                        max_val=hardware.DEFAULT_POT_MAX,
+                        zero_band=hardware.DEFAULT_ZERO_BAND)
 
     print("Potentiometer initialized")
-    print("Calibration: min=100, max=3995, zero_band=50")
+    print("Calibration: min={}, max={}, zero_band={}".format(
+        hardware.DEFAULT_POT_MIN, hardware.DEFAULT_POT_MAX, hardware.DEFAULT_ZERO_BAND))
     print("\nTurn potentiometer to see readings")
     print("Press Ctrl+C to exit\n")
 
@@ -87,10 +91,9 @@ def test_calibration_helper():
     print("Potentiometer Calibration Helper")
     print("="*50)
 
-    POT_GPIO = 1  # Controller potentiometer
-
-    print("Configuring ADC on GPIO", POT_GPIO)
-    adc = ADC(Pin(POT_GPIO))
+    # Configure ADC - from hardware config
+    print("Configuring ADC on GPIO", hardware.POT_GPIO)
+    adc = ADC(Pin(hardware.POT_GPIO))
     adc.atten(ADC.ATTN_11DB)
     adc.width(ADC.WIDTH_12BIT)
 
@@ -146,16 +149,18 @@ def test_zero_band():
     print("Potentiometer Zero Band Test")
     print("="*50)
 
-    POT_GPIO = 1  # Controller potentiometer
-
-    print("Configuring potentiometer on GPIO", POT_GPIO)
-    adc = ADC(Pin(POT_GPIO))
+    # Configure ADC - from hardware config
+    print("Configuring potentiometer on GPIO", hardware.POT_GPIO)
+    adc = ADC(Pin(hardware.POT_GPIO))
     adc.atten(ADC.ATTN_11DB)
     adc.width(ADC.WIDTH_12BIT)
 
-    pot = Potentiometer(adc, min_val=100, max_val=3995, zero_band=50)
+    pot = Potentiometer(adc,
+                        min_val=hardware.DEFAULT_POT_MIN,
+                        max_val=hardware.DEFAULT_POT_MAX,
+                        zero_band=hardware.DEFAULT_ZERO_BAND)
 
-    print("Zero band configured: 50 ADC units")
+    print("Zero band configured: {} ADC units".format(hardware.DEFAULT_ZERO_BAND))
     print("\nSlowly turn potentiometer from minimum")
     print("Watch when speed changes from 0 to >0")
     print("This should happen when raw > min + zero_band")
@@ -177,7 +182,7 @@ def test_zero_band():
 
                 prev_speed = speed
 
-            in_zero_band = (raw < 100 + 50) if raw >= 100 else True
+            in_zero_band = (raw < hardware.DEFAULT_POT_MIN + hardware.DEFAULT_ZERO_BAND) if raw >= hardware.DEFAULT_POT_MIN else True
 
             print("\rRaw: {:4d}  Speed: {:3d}%  Zero band: {}  ".format(
                 raw, speed, "YES" if in_zero_band else "NO "
@@ -200,15 +205,14 @@ def test_with_custom_calibration():
     print("Potentiometer Test with Custom Calibration")
     print("="*50)
 
-    POT_GPIO = 1  # Controller potentiometer
-
     # EDIT THESE VALUES after running calibration helper
-    CUSTOM_MIN = 100
-    CUSTOM_MAX = 3995
-    CUSTOM_ZERO_BAND = 50
+    # Using defaults from hardware config as starting point
+    CUSTOM_MIN = hardware.DEFAULT_POT_MIN
+    CUSTOM_MAX = hardware.DEFAULT_POT_MAX
+    CUSTOM_ZERO_BAND = hardware.DEFAULT_ZERO_BAND
 
-    print("Configuring potentiometer on GPIO", POT_GPIO)
-    adc = ADC(Pin(POT_GPIO))
+    print("Configuring potentiometer on GPIO", hardware.POT_GPIO)
+    adc = ADC(Pin(hardware.POT_GPIO))
     adc.atten(ADC.ATTN_11DB)
     adc.width(ADC.WIDTH_12BIT)
 

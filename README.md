@@ -35,17 +35,16 @@ esp32-lego-pf-upython/
 │   ├── button.py                 # Debounced button driver
 │   ├── led.py                    # LED patterns (solid, blink, etc)
 │   ├── motor_driver.py           # TB6612 abstraction
-│   └── potentiometer.py          # ADC with dead zone handling
+│   ├── potentiometer.py          # ADC with dead zone handling
+│   └── hardware.py               # GPIO pin assignments (both devices)
 │
 ├── controller/
 │   ├── boot.py                   # Minimal - sets up path
-│   ├── main.py                   # Controller app entry point
-│   └── hardware.py               # Controller GPIO configuration
+│   └── main.py                   # Controller app entry point
 │
 ├── receiver/
 │   ├── boot.py                   # Minimal - sets up path
-│   ├── main.py                   # Receiver app entry point
-│   └── hardware.py               # Receiver GPIO configuration
+│   └── main.py                   # Receiver app entry point
 │
 ├── tests/                        # Unit tests (run on host)
 │   ├── test_espnow_protocol.py

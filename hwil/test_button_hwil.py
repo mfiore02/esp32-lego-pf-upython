@@ -17,8 +17,8 @@ Expected behavior:
     - Multiple presses: Each detected separately
 
 Hardware setup:
-    - Controller: Button on GPIO10 (with pull-up, active low)
-    - Receiver: Button on GPIO10 (with pull-up, active low)
+    See lib/hardware.py for GPIO pin assignments.
+    - Button on GPIO10 (with pull-up, active low)
     - External button connected to GPIO10 (active low with pull-up)
 """
 
@@ -31,6 +31,7 @@ if '/lib' not in sys.path:
     sys.path.insert(0, '/lib')
 
 from button import Button
+import hardware
 
 
 def test_button():
@@ -40,12 +41,10 @@ def test_button():
     print("Button HWIL Test")
     print("="*50)
 
-    # Configure button pin - GPIO10 for both controller and receiver
-    BUTTON_GPIO = 10
-
-    print("Configuring button on GPIO", BUTTON_GPIO)
-    pin = Pin(BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
-    btn = Button(pin, active_low=True, debounce_ms=50)
+    # Configure button pin - from hardware config
+    print("Configuring button on GPIO", hardware.BUTTON_GPIO)
+    pin = Pin(hardware.BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
+    btn = Button(pin, active_low=hardware.BUTTON_ACTIVE_LOW, debounce_ms=50)
 
     print("Button initialized")
     print("Press the button to test...")
@@ -110,11 +109,10 @@ def test_debouncing():
     print("Debouncing Test")
     print("="*50)
 
-    BUTTON_GPIO = 10  # Controller/Receiver button
-
-    print("Configuring button on GPIO", BUTTON_GPIO)
-    pin = Pin(BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
-    btn = Button(pin, active_low=True, debounce_ms=50)
+    # Configure button pin - from hardware config
+    print("Configuring button on GPIO", hardware.BUTTON_GPIO)
+    pin = Pin(hardware.BUTTON_GPIO, Pin.IN, Pin.PULL_UP)
+    btn = Button(pin, active_low=hardware.BUTTON_ACTIVE_LOW, debounce_ms=50)
 
     print("This test monitors debouncing behavior")
     print("Press button quickly and observe output")

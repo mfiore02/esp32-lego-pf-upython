@@ -7,7 +7,7 @@ Train receiver firmware for ESP32-C3.
 - `boot.py` - Minimal boot script, sets up sys.path to include lib/
 - `main.py` - Main application logic (pairing and normal mode)
 
-**Note:** `hardware.py` is planned but not yet implemented. GPIO configuration is currently in main.py.
+GPIO pin assignments are centralized in [lib/hardware.py](../lib/hardware.py).
 
 ## Hardware
 

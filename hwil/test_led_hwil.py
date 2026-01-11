@@ -17,9 +17,9 @@ Expected behavior:
     - Serial output describes current pattern
 
 Hardware setup:
-    - Controller: LED on GPIO8 (with 1K resistor to ground)
-    - Receiver: LED on GPIO8 (with 1K resistor to ground)
-    - Status LED connected to GPIO8 (active high)
+    See lib/hardware.py for GPIO pin assignments.
+    - Status LED on GPIO8 (active high)
+    - Connect LED with 1K resistor to ground
 """
 
 import sys
@@ -31,6 +31,7 @@ if '/lib' not in sys.path:
     sys.path.insert(0, '/lib')
 
 from led import LED, Pattern
+import hardware
 
 
 def test_all_patterns():
@@ -40,12 +41,10 @@ def test_all_patterns():
     print("LED HWIL Test - Pattern Demo")
     print("="*50)
 
-    # Configure LED pin - GPIO8 for both controller and receiver status LED
-    LED_GPIO = 8
-
-    print("Configuring LED on GPIO", LED_GPIO)
-    pin = Pin(LED_GPIO, Pin.OUT)
-    led = LED(pin, active_high=True)
+    # Configure LED pin - from hardware config
+    print("Configuring LED on GPIO", hardware.LED_GPIO)
+    pin = Pin(hardware.LED_GPIO, Pin.OUT)
+    led = LED(pin, active_high=hardware.LED_ACTIVE_HIGH)
 
     print("LED initialized")
     print("\nCycling through patterns...")
@@ -100,11 +99,10 @@ def test_interactive():
     print("LED Interactive Test")
     print("="*50)
 
-    LED_GPIO = 8  # Controller/Receiver status LED
-
-    print("Configuring LED on GPIO", LED_GPIO)
-    pin = Pin(LED_GPIO, Pin.OUT)
-    led = LED(pin, active_high=True)
+    # Configure LED pin - from hardware config
+    print("Configuring LED on GPIO", hardware.LED_GPIO)
+    pin = Pin(hardware.LED_GPIO, Pin.OUT)
+    led = LED(pin, active_high=hardware.LED_ACTIVE_HIGH)
 
     print("\nLED configured. Use REPL to test patterns:")
     print("  led.turn_on()")
@@ -144,11 +142,10 @@ def test_timing_accuracy():
     print("LED Timing Accuracy Test")
     print("="*50)
 
-    LED_GPIO = 8  # Controller/Receiver status LED
-
-    print("Configuring LED on GPIO", LED_GPIO)
-    pin = Pin(LED_GPIO, Pin.OUT)
-    led = LED(pin, active_high=True)
+    # Configure LED pin - from hardware config
+    print("Configuring LED on GPIO", hardware.LED_GPIO)
+    pin = Pin(hardware.LED_GPIO, Pin.OUT)
+    led = LED(pin, active_high=hardware.LED_ACTIVE_HIGH)
 
     # Test fast blink timing (100ms expected)
     print("\nTesting BLINK_FAST pattern (100ms on, 100ms off)")

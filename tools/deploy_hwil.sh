@@ -34,6 +34,7 @@ mpremote connect $PORT fs cp lib/led.py :/lib/led.py
 mpremote connect $PORT fs cp lib/potentiometer.py :/lib/potentiometer.py
 mpremote connect $PORT fs cp lib/motor_driver.py :/lib/motor_driver.py
 mpremote connect $PORT fs cp lib/espnow_protocol.py :/lib/espnow_protocol.py
+mpremote connect $PORT fs cp lib/hardware.py :/lib/hardware.py
 
 # Copy all HWIL test files
 echo "Copying HWIL test files..."
