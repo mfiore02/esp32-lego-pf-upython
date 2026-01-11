@@ -35,7 +35,7 @@ class MotorMode:
 class MotorDriver:
     """TB6612FNG motor driver controller for single motor channel."""
 
-    def __init__(self, pwm, in1_pin, in2_pin, reverse=False, deadband=0):
+    def __init__(self, pwm, in1_pin, in2_pin, reverse=False, deadband=0, max_speed=100):
         """
         Initialize motor driver.
 
@@ -45,12 +45,14 @@ class MotorDriver:
             in2_pin: machine.Pin object for IN2 (direction control)
             reverse: Swap forward/reverse direction (default: False)
             deadband: Minimum speed percentage to apply (0-100, default: 0)
+            max_speed: Maximum speed limit percentage (0-100, default: 100)
         """
         self.pwm = pwm
         self.in1 = in1_pin
         self.in2 = in2_pin
         self.reverse = reverse
         self.deadband = deadband
+        self.max_speed = max_speed
 
         # Current state
         self._speed = 0  # Current speed (0-100)
@@ -72,6 +74,9 @@ class MotorDriver:
             speed = 0
         elif speed > 100:
             speed = 100
+
+        # Apply max_speed scaling
+        speed = int(speed * self.max_speed / 100)
 
         # Apply deadband
         if speed < self.deadband:
@@ -165,6 +170,20 @@ class MotorDriver:
             deadband = 100
 
         self.deadband = deadband
+
+    def set_max_speed(self, max_speed):
+        """
+        Set maximum speed limit.
+
+        Args:
+            max_speed: Maximum speed percentage (0-100)
+        """
+        if max_speed < 0:
+            max_speed = 0
+        elif max_speed > 100:
+            max_speed = 100
+
+        self.max_speed = max_speed
 
     def _set_mode(self, mode):
         """

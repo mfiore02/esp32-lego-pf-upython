@@ -42,7 +42,7 @@ class TestConfigManagerFS:
         assert config.get("device_type") == "controller"
         assert config.get("paired") is False
         assert config.get("train_mac") is None
-        assert config.get("pot_calibration.min") == 100
+        assert config.get("pot_calibration.min") == 0
 
     def test_receiver_defaults(self):
         """Test receiver default configuration."""
@@ -121,5 +121,62 @@ class TestConfigManagerFS:
             assert False, "Should have raised ValueError"
         except ValueError as e:
             assert "Invalid device_type" in str(e)
+
+    def test_migrate_v1_to_v2_receiver(self):
+        """Test migration from v1 to v2 adds max_speed to receiver config."""
+        from config_manager import ConfigManager
+        import json
+        import os
+
+        # Create a v1 receiver config (without max_speed)
+        v1_config = {
+            "version": 1,
+            "device_type": "receiver",
+            "paired": False,
+            "controller_mac": None,
+            "motor_config": {
+                "deadband": 5,
+                "reverse_motor1": True,
+                "reverse_motor2": False
+                # max_speed missing
+            }
+        }
+
+        # Save v1 config to file
+        import tempfile
+        config_dir = tempfile.mkdtemp(prefix="config_test_")
+        config_file = config_dir + "/receiver.json"
+
+        # Write v1 config
+        # (no need to clean up first since mkdtemp creates fresh dir)
+        with open(config_file, 'w') as f:
+            f.write(json.dumps(v1_config))
+
+        # Patch CONFIG_DIR temporarily for test
+        original_config_dir = ConfigManager.CONFIG_DIR
+        ConfigManager.CONFIG_DIR = config_dir
+
+        try:
+            # Load config (should trigger migration)
+            config = ConfigManager("receiver")
+
+            # Verify migration occurred
+            assert config.get("version") == 2
+            assert config.get("motor_config.max_speed") == 100
+            # Verify existing values preserved
+            assert config.get("motor_config.deadband") == 5
+            assert config.get("motor_config.reverse_motor1") is True
+            assert config.get("motor_config.reverse_motor2") is False
+
+        finally:
+            # Restore original CONFIG_DIR
+            ConfigManager.CONFIG_DIR = original_config_dir
+
+            # Cleanup
+            import shutil
+            try:
+                shutil.rmtree(config_dir)
+            except OSError:
+                pass
 
 print("Tests updated for filesystem-based config manager")

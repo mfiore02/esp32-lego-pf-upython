@@ -312,6 +312,73 @@ class TestMotorDriver:
             else:
                 assert abs(actual_duty - expected_duty) <= 1
 
+    def test_max_speed_scaling(self):
+        """Test max_speed limits motor speed."""
+        from motor_driver import MotorDriver, MotorMode
+
+        pwm = MockPWM(None)
+        in1 = MockPin(1)
+        in2 = MockPin(2)
+
+        motor = MotorDriver(pwm, in1, in2, max_speed=50)
+        motor.drive(100, MotorMode.FORWARD)
+
+        # 100% input * 50% max_speed = 50% actual
+        assert motor.get_speed() == 50
+        assert 510 <= pwm.duty() <= 512  # 50% of 1023
+
+    def test_max_speed_clamping(self):
+        """Test max_speed validates to 0-100 range."""
+        from motor_driver import MotorDriver
+
+        pwm = MockPWM(None)
+        in1 = MockPin(1)
+        in2 = MockPin(2)
+
+        motor = MotorDriver(pwm, in1, in2)
+
+        # Test clamping in set_max_speed
+        motor.set_max_speed(150)
+        assert motor.max_speed == 100
+
+        motor.set_max_speed(-50)
+        assert motor.max_speed == 0
+
+    def test_max_speed_with_deadband(self):
+        """Test max_speed interacts correctly with deadband."""
+        from motor_driver import MotorDriver, MotorMode
+
+        pwm = MockPWM(None)
+        in1 = MockPin(1)
+        in2 = MockPin(2)
+
+        motor = MotorDriver(pwm, in1, in2, deadband=10, max_speed=50)
+
+        # Speed 100 -> max_speed scales to 50 -> above deadband
+        motor.drive(100, MotorMode.FORWARD)
+        assert motor.get_speed() == 50
+
+        # Speed 15 -> max_speed scales to 7 -> below deadband -> 0
+        motor.drive(15, MotorMode.FORWARD)
+        assert motor.get_speed() == 0
+
+    def test_set_max_speed(self):
+        """Test setting max_speed at runtime."""
+        from motor_driver import MotorDriver, MotorMode
+
+        pwm = MockPWM(None)
+        in1 = MockPin(1)
+        in2 = MockPin(2)
+
+        motor = MotorDriver(pwm, in1, in2)
+        assert motor.max_speed == 100
+
+        motor.set_max_speed(75)
+        assert motor.max_speed == 75
+
+        motor.drive(100, MotorMode.FORWARD)
+        assert motor.get_speed() == 75
+
 
 class TestDualMotorDriver:
     """Test dual motor driver."""

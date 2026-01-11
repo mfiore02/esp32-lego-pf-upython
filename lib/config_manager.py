@@ -17,7 +17,7 @@ import os
 class ConfigManager:
     """Manages versioned configuration storage using filesystem."""
 
-    VERSION = 1
+    VERSION = 2
     CONFIG_DIR = "/config"
 
     # Device type constants
@@ -45,7 +45,8 @@ class ConfigManager:
             "motor_config": {
                 "deadband": 0,
                 "reverse_motor1": False,
-                "reverse_motor2": False
+                "reverse_motor2": False,
+                "max_speed": 100
             }
         }
     }
@@ -176,6 +177,9 @@ class ConfigManager:
             if current_version < 1:
                 self._migrate_to_v1()
 
+            if current_version < 2:
+                self._migrate_to_v2()
+
             # Update version
             self._config["version"] = self.VERSION
             self.save()
@@ -188,3 +192,13 @@ class ConfigManager:
         for key, value in default.items():
             if key not in self._config:
                 self._config[key] = value
+
+    def _migrate_to_v2(self):
+        """Migrate to version 2 - add max_speed to motor_config."""
+        if self.device_type == self.DEVICE_RECEIVER:
+            # Add max_speed to motor_config if missing
+            motor_config = self._config.get('motor_config', {})
+            if 'max_speed' not in motor_config:
+                motor_config['max_speed'] = 100
+                self._config['motor_config'] = motor_config
+                print("Migration v1->v2: Added motor_config.max_speed=100")

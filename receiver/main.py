@@ -72,17 +72,33 @@ class ReceiverApp:
         button_pin = Pin(10, Pin.IN, Pin.PULL_UP)
         self.button = Button(button_pin, active_low=True)
 
+        # Load motor configuration from config manager
+        motor_cfg = self.config.get('motor_config', {})
+        deadband = motor_cfg.get('deadband', 0)
+        reverse_m1 = motor_cfg.get('reverse_motor1', False)
+        reverse_m2 = motor_cfg.get('reverse_motor2', False)
+        max_speed = motor_cfg.get('max_speed', 100)
+
+        print("Motor config: deadband={}, reverse=[{},{}], max_speed={}%".format(
+            deadband, reverse_m1, reverse_m2, max_speed))
+
         # Motor 1: PWM=GPIO2, IN1=GPIO3, IN2=GPIO4
         pwm1 = PWM(Pin(2), freq=1000, duty=0)
         in1_1 = Pin(3, Pin.OUT)
         in2_1 = Pin(4, Pin.OUT)
-        motor1 = MotorDriver(pwm1, in1_1, in2_1)
+        motor1 = MotorDriver(pwm1, in1_1, in2_1,
+                             reverse=reverse_m1,
+                             deadband=deadband,
+                             max_speed=max_speed)
 
         # Motor 2: PWM=GPIO5, IN1=GPIO6, IN2=GPIO7
         pwm2 = PWM(Pin(5), freq=1000, duty=0)
         in1_2 = Pin(6, Pin.OUT)
         in2_2 = Pin(7, Pin.OUT)
-        motor2 = MotorDriver(pwm2, in1_2, in2_2)
+        motor2 = MotorDriver(pwm2, in1_2, in2_2,
+                             reverse=reverse_m2,
+                             deadband=deadband,
+                             max_speed=max_speed)
 
         # Dual motor controller
         self.motors = DualMotorDriver(motor1, motor2)
