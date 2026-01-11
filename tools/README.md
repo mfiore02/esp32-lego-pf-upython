@@ -4,21 +4,40 @@ Deployment and configuration utilities.
 
 ## Scripts
 
-### flash_controller.sh
+### deploy_controller.sh
 Deploys controller firmware to ESP32-C3.
 
 ```bash
-./tools/flash_controller.sh /dev/ttyUSB0
+# Windows
+.\tools\deploy_controller.sh COM3
+
+# Linux/Mac
+./tools/deploy_controller.sh /dev/ttyUSB0
 ```
 
-### flash_receiver.sh
+### deploy_receiver.sh
 Deploys receiver firmware to ESP32-C3.
 
 ```bash
-./tools/flash_receiver.sh /dev/ttyUSB0
+# Windows
+.\tools\deploy_receiver.sh COM3
+
+# Linux/Mac
+./tools/deploy_receiver.sh /dev/ttyUSB0
 ```
 
-### cli.py
+### deploy_hwil.sh
+Deploys HWIL tests for hardware validation.
+
+```bash
+# Windows
+.\tools\deploy_hwil.sh COM3
+
+# Linux/Mac
+./tools/deploy_hwil.sh /dev/ttyUSB0
+```
+
+### cli.py (TODO - Not Yet Implemented)
 Serial-based configuration tool for devices.
 
 ```bash
@@ -32,5 +51,9 @@ python tools/cli.py /dev/ttyUSB0
 ## Requirements
 
 ```bash
-pip install esptool adafruit-ampy pyserial
+pip install esptool mpremote
 ```
+
+## Documentation
+
+See [MPREMOTE_GUIDE.md](MPREMOTE_GUIDE.md) for detailed mpremote usage examples and manual deployment instructions.
