@@ -37,16 +37,28 @@ Deploys HWIL tests for hardware validation.
 ./tools/deploy_hwil.sh /dev/ttyUSB0
 ```
 
-### cli.py (TODO - Not Yet Implemented)
-Serial-based configuration tool for devices.
+### cli.py
+Interactive serial-based configuration tool for devices.
 
 ```bash
-python tools/cli.py /dev/ttyUSB0
+# Windows
+python tools/cli.py COM3
 
->>> config.show()
->>> config.unpair()
->>> config.set('pot_calibration.min', 150)
+# Linux/Mac
+python tools/cli.py /dev/ttyUSB0
 ```
+
+Example session:
+```
+>>> config.show()                           # Display entire config
+>>> config.get('paired')                    # Get specific value
+>>> config.set('pot_calibration.min', 150)  # Set and auto-save
+>>> config.unpair()                         # Clear pairing data
+>>> help                                    # Show all commands
+>>> exit()                                  # Exit CLI
+```
+
+Automatically detects device type (controller or receiver).
 
 ## Requirements
 
