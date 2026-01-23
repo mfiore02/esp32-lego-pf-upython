@@ -3,6 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "9.0")
 	(layer "F.Cu")
+	(descr "Teyleten Robot ESP32-C3 Development Board ESP32 Supermini")
 	(property "Reference" "Ref**"
 		(at 0 -0.5 0)
 		(unlocked yes)
@@ -40,7 +41,7 @@
 			)
 		)
 	)
-	(property "Description" ""
+	(property "Description" "Teyleten Robot ESP32-C3 Development Board ESP32 Supermini"
 		(at 0 0 0)
 		(unlocked yes)
 		(layer "F.Fab")
@@ -50,6 +51,18 @@
 			(font
 				(size 1 1)
 				(thickness 0.15)
+			)
+		)
+	)
+	(property "Link" "https://www.amazon.com/dp/B0D47G24W3?ref=ppx_yo2ov_dt_b_fed_asin_title"
+		(at 0 0 0)
+		(layer "User.1")
+		(hide yes)
+		(uuid "8a121be2-00b2-4865-88d6-c2830c690814")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
 			)
 		)
 	)

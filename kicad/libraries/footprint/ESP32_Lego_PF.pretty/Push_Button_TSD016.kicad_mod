@@ -3,6 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "9.0")
 	(layer "F.Cu")
+	(descr "TS-D016 SPST Push Button Switch")
 	(property "Reference" "REF**"
 		(at 0 -0.5 0)
 		(unlocked yes)
@@ -40,7 +41,7 @@
 			)
 		)
 	)
-	(property "Description" ""
+	(property "Description" "TS-D016 SPST Push Button Switch"
 		(at 0 0 0)
 		(unlocked yes)
 		(layer "F.Fab")
@@ -50,6 +51,18 @@
 			(font
 				(size 1 1)
 				(thickness 0.15)
+			)
+		)
+	)
+	(property "Link" "https://www.amazon.com/dp/B09R42T3CB?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1"
+		(at 0 0 0)
+		(layer "User.1")
+		(hide yes)
+		(uuid "3f28da69-59da-45a8-abec-d6bc86849880")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
 			)
 		)
 	)

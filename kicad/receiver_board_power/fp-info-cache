@@ -1,4 +1,4 @@
-26767336250939831
+26772644059361594
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -61376,26 +61376,47 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 10
 10
 ESP32_Lego_PF
-ESP32-C3-SuperMini
+2S BMS
+DIANN Type-C USB 2S BMS 15W 8.4V 12.6V 1.5A Boost Power Supply Module
 
+0
+0
+0
+ESP32_Lego_PF
+ESP32-C3-SuperMini
+Teyleten Robot ESP32-C3 Development Board ESP32 Supermini
 
 0
 16
 16
 ESP32_Lego_PF
-Push_Button_TSD016
+MP1584EN
+MP1584EN Mini 5V Buck Converter Board
 
+0
+4
+4
+ESP32_Lego_PF
+Push_Button_TSD016
+TS-D016 SPST Push Button Switch
 
 0
 2
 2
 ESP32_Lego_PF
 Slide_Switch_SPDT_12D00G
-
+SS12D00G SPDT Slide Switch
 
 0
 3
 3
+ESP32_Lego_PF
+TB6612FNG
+TB6612FNG Dual DC Motor Driver
+
+0
+16
+16
 Ferrite_THT
 LairdTech_28C0236-0JW-10
 Ferrite, vertical, LairdTech 28C0236-0JW-10, https://assets.lairdtech.com/home/brandworld/files/28C0236-0JW-10.pdf, JW Miller core https://www.bourns.com/products/magnetic-products/j.w.-miller-through-hole-ferrite-beads-emi-filters
