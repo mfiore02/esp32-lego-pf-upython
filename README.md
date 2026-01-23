@@ -163,6 +163,16 @@ This project follows an **incremental, test-driven development** approach:
 11. ⬜ `tools/cli.py` - USB-C serial configuration tool (optional)
 12. ⬜ Final documentation and build guide updates
 
+#### Phase 5: PCB Design
+13. ✅ Controller schematic (P-FET power switching, GPIO assignments)
+14. ✅ Receiver schematic (P-FET switching, TB6612 H-bridge, buck converter, BMS)
+15. ✅ Custom symbol library (ESP32-C3-SuperMini, TB6612FNG, MP1584EN, 2S BMS)
+16. ✅ Custom footprints (ESP32 module, slide switch, push button)
+17. ⬜ Add decoupling capacitors to both schematics
+18. ⬜ Custom footprints for breakout boards (2S BMS, MP1584EN buck, TB6612FNG)
+19. ⬜ Controller PCB layout
+20. ⬜ Receiver PCB layout
+
 ## Installation & Deployment
 
 ### Prerequisites
