@@ -1,4 +1,4 @@
-26770874857035722
+26772644060247708
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -61376,6 +61376,13 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 10
 10
 ESP32_Lego_PF
+2S BMS
+DIANN Type-C USB 2S BMS 15W 8.4V 12.6V 1.5A Boost Power Supply Module
+
+0
+10
+10
+ESP32_Lego_PF
 ESP32-C3-SuperMini
 Teyleten Robot ESP32-C3 Development Board ESP32 Supermini
 
@@ -61387,8 +61394,8 @@ MP1584EN
 MP1584EN Mini 5V Buck Converter Board
 
 0
-0
-0
+4
+4
 ESP32_Lego_PF
 Push_Button_TSD016
 TS-D016 SPST Push Button Switch

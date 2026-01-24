@@ -105,11 +105,11 @@ See `docs/lego_pf_controller_build_guide.pdf` for detailed wiring diagrams and a
 | Function | GPIO | Notes |
 |----------|------|-------|
 | Motor 1 PWM | GPIO2 | TB6612 PWMA |
-| Motor 1 IN1 | GPIO3 | TB6612 AIN1 |
-| Motor 1 IN2 | GPIO4 | TB6612 AIN2 |
+| Motor 1 IN1 | GPIO4 | TB6612 AIN1 |
+| Motor 1 IN2 | GPIO3 | TB6612 AIN2 |
 | Motor 2 PWM | GPIO5 | TB6612 PWMB |
-| Motor 2 IN1 | GPIO6 | TB6612 BIN1 |
-| Motor 2 IN2 | GPIO7 | TB6612 BIN2 |
+| Motor 2 IN1 | GPIO7 | TB6612 BIN1 |
+| Motor 2 IN2 | GPIO6 | TB6612 BIN2 |
 | Status LED | GPIO8 | Status indicator |
 | Pairing Button | GPIO10 | External button (active low) |
 

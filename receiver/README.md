@@ -13,13 +13,13 @@ GPIO pin assignments are centralized in [lib/hardware.py](../lib/hardware.py).
 
 - **Motor 1 (TB6612 Channel A):**
   - PWM: GPIO2 (PWMA)
-  - IN1: GPIO3 (AIN1)
-  - IN2: GPIO4 (AIN2)
+  - IN1: GPIO4 (AIN1)
+  - IN2: GPIO3 (AIN2)
 
 - **Motor 2 (TB6612 Channel B):**
   - PWM: GPIO5 (PWMB)
-  - IN1: GPIO6 (BIN1)
-  - IN2: GPIO7 (BIN2)
+  - IN1: GPIO7 (BIN1)
+  - IN2: GPIO6 (BIN2)
 
 - **Other I/O:**
   - Status LED: GPIO8 (status indicator, active high)

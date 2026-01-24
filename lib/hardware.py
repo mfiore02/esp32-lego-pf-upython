@@ -49,13 +49,13 @@ TX_PERIOD_MS = 50       # Transmit period in milliseconds
 
 # Motor 1 (Channel A) - TB6612FNG
 MOTOR1_PWM_GPIO = 2     # PWMA
-MOTOR1_IN1_GPIO = 3     # AIN1
-MOTOR1_IN2_GPIO = 4     # AIN2
+MOTOR1_IN1_GPIO = 4     # AIN1
+MOTOR1_IN2_GPIO = 3     # AIN2
 
 # Motor 2 (Channel B) - TB6612FNG
 MOTOR2_PWM_GPIO = 5     # PWMB
-MOTOR2_IN1_GPIO = 6     # BIN1
-MOTOR2_IN2_GPIO = 7     # BIN2
+MOTOR2_IN1_GPIO = 7     # BIN1
+MOTOR2_IN2_GPIO = 6     # BIN2
 
 # PWM Configuration
 MOTOR_PWM_FREQ = 1000   # PWM frequency in Hz (1kHz)

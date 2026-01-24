@@ -168,6 +168,333 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:Conn_01x06_Pin"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x06_Pin"
+				(at 0 -10.16 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x06, script generated"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x06_Pin_1_1"
+				(rectangle
+					(start 0.8636 5.207)
+					(end 0 4.953)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -7.493)
+					(end 0 -7.747)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 5.08) (xy 0.8636 5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -5.08) (xy 0.8636 -5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -7.62) (xy 0.8636 -7.62)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 5.08 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 3.81)
+					(name "Pin_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -7.62 180)
+					(length 3.81)
+					(name "Pin_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:LED"
 			(pin_numbers
 				(hide yes)
@@ -1033,323 +1360,13 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Transistor_FET:FQP27P06"
-			(pin_names
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "Q"
-				(at 5.08 1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "FQP27P06"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
-				(at 5.08 -1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "https://www.onsemi.com/pub/Collateral/FQP27P06-D.PDF"
-				(at 5.08 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Description" "-27A Id, -60V Vds, QFET P-Channel MOSFET, TO-220"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "QFET P-Channel MOSFET"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "TO?220*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "FQP27P06_0_1"
-				(polyline
-					(pts
-						(xy 0.254 1.905) (xy 0.254 -1.905)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.254 0) (xy -2.54 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 2.286) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 1.778) (xy 3.302 1.778) (xy 3.302 -1.778) (xy 0.762 -1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 0.508) (xy 0.762 -0.508)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 -1.27) (xy 0.762 -2.286)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 1.651 0)
-					(radius 2.794)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.286 0) (xy 1.27 0.381) (xy 1.27 -0.381) (xy 2.286 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 2.54) (xy 2.54 1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 2.54 1.778)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(circle
-					(center 2.54 -1.778)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.794 -0.508) (xy 2.921 -0.381) (xy 3.683 -0.381) (xy 3.81 -0.254)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.302 -0.381) (xy 2.921 0.254) (xy 3.683 0.254) (xy 3.302 -0.381)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "FQP27P06_1_1"
-				(pin input line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "G"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 5.08 270)
-					(length 2.54)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-	)
-	(junction
-		(at 190.5 80.01)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0224eb18-7b47-4ffa-be4a-7a45cd862dcb")
-	)
-	(junction
-		(at 180.34 71.12)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "2d7e1043-cb50-47ac-8f4e-40bcb6fd4564")
 	)
 	(no_connect
 		(at 101.6 81.28)
 		(uuid "0e0dfbb0-76ac-4bf4-b174-0cbb01b72d1c")
 	)
 	(no_connect
-		(at 200.66 91.44)
+		(at 180.34 88.9)
 		(uuid "29c10ea1-896d-47fd-90d2-2ddf03de5d2d")
 	)
 	(no_connect
@@ -1394,33 +1411,23 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 80.01) (xy 190.5 80.01)
+			(xy 185.42 71.12) (xy 189.23 71.12)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "15de481c-7406-4599-ba0c-65a4fc642201")
+		(uuid "1cb563d9-8105-4fc2-8a6d-4ad35c02b3f6")
 	)
 	(wire
 		(pts
-			(xy 180.34 87.63) (xy 180.34 85.09)
+			(xy 185.42 76.2) (xy 189.23 76.2)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "1a4fa061-f0c6-4fff-9dda-26648c5c750c")
-	)
-	(wire
-		(pts
-			(xy 190.5 80.01) (xy 187.96 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1e76afaf-3bf3-42ec-b826-82fbb0e26f84")
+		(uuid "2d213c86-b1b3-4760-b026-303d11fc2d1c")
 	)
 	(wire
 		(pts
@@ -1474,13 +1481,33 @@
 	)
 	(wire
 		(pts
-			(xy 180.34 71.12) (xy 181.61 71.12)
+			(xy 185.42 73.66) (xy 189.23 73.66)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9e28cb4d-4878-4b26-a3cc-cbcaa971f7e5")
+		(uuid "5f0bc2e4-a1e3-4c09-b9ad-bd04c2e4bc80")
+	)
+	(wire
+		(pts
+			(xy 185.42 66.04) (xy 189.23 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7101b0c4-e326-47a2-b54b-b38a96c7a8f2")
+	)
+	(wire
+		(pts
+			(xy 185.42 78.74) (xy 189.23 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83272166-4a3f-4b2e-bb01-e7a70a7f1fc0")
 	)
 	(wire
 		(pts
@@ -1491,16 +1518,6 @@
 			(type default)
 		)
 		(uuid "add2f00a-6bd1-4129-9d2d-6581a7753344")
-	)
-	(wire
-		(pts
-			(xy 180.34 67.31) (xy 180.34 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b64ac08c-83e5-437a-ab54-1a2f17a9f0f1")
 	)
 	(wire
 		(pts
@@ -1524,27 +1541,7 @@
 	)
 	(wire
 		(pts
-			(xy 180.34 71.12) (xy 180.34 74.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c0134046-d6e0-4ed1-9daa-d13289386eff")
-	)
-	(wire
-		(pts
-			(xy 190.5 71.12) (xy 190.5 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c13f05ec-610e-4dec-9daf-53802242240e")
-	)
-	(wire
-		(pts
-			(xy 195.58 88.9) (xy 195.58 91.44)
+			(xy 175.26 86.36) (xy 175.26 88.9)
 		)
 		(stroke
 			(width 0)
@@ -1554,13 +1551,23 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 106.68) (xy 198.12 101.6)
+			(xy 177.8 104.14) (xy 177.8 99.06)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "c60dc70b-b6ae-4b2f-bb77-a303eb8b8e70")
+	)
+	(wire
+		(pts
+			(xy 185.42 68.58) (xy 189.23 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c6e0f615-b674-4573-a89c-0cc7f03484ed")
 	)
 	(wire
 		(pts
@@ -1594,16 +1601,6 @@
 	)
 	(wire
 		(pts
-			(xy 189.23 71.12) (xy 190.5 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e998b3b2-d234-4755-8348-e3fbd820c967")
-	)
-	(wire
-		(pts
 			(xy 138.43 64.77) (xy 138.43 68.58)
 		)
 		(stroke
@@ -1622,6 +1619,16 @@
 		)
 		(uuid "ed832eae-73c6-4e83-9e41-39df58e2e06d")
 	)
+	(label "7v4_BMS"
+		(at 185.42 76.2 180)
+		(effects
+			(font
+				(size 0.635 0.635)
+			)
+			(justify right bottom)
+		)
+		(uuid "12fa3ee0-a5ac-4995-bcb3-f6ea0326d326")
+	)
 	(label "GND"
 		(at 153.67 97.79 0)
 		(effects
@@ -1632,8 +1639,18 @@
 		)
 		(uuid "31262c51-7f5c-47ab-9ea6-cc5378a4a73c")
 	)
+	(label "LED_ESP"
+		(at 185.42 66.04 180)
+		(effects
+			(font
+				(size 0.635 0.635)
+			)
+			(justify right bottom)
+		)
+		(uuid "38692a9f-24a9-45c1-ba98-4d547da83c28")
+	)
 	(label "PWR_SW"
-		(at 195.58 88.9 180)
+		(at 175.26 86.36 180)
 		(effects
 			(font
 				(size 0.635 0.635)
@@ -1641,16 +1658,6 @@
 			(justify right bottom)
 		)
 		(uuid "58f83891-cbeb-4c49-92f2-ed81eec3ff40")
-	)
-	(label "7v4_BMS"
-		(at 180.34 67.31 180)
-		(effects
-			(font
-				(size 0.635 0.635)
-			)
-			(justify right bottom)
-		)
-		(uuid "6255f557-f502-484f-92d9-35bee461b894")
 	)
 	(label "GND"
 		(at 138.43 64.77 180)
@@ -1662,6 +1669,16 @@
 		)
 		(uuid "6754ca5b-4778-4be6-be0d-d4411bab0122")
 	)
+	(label "5v_BUCK"
+		(at 185.42 68.58 180)
+		(effects
+			(font
+				(size 0.635 0.635)
+			)
+			(justify right bottom)
+		)
+		(uuid "69a34bf4-cbce-47ed-b824-57d0cebfaca5")
+	)
 	(label "GND"
 		(at 138.43 83.82 180)
 		(effects
@@ -1672,17 +1689,17 @@
 		)
 		(uuid "706bf9b2-b485-4f5a-8b64-4ed9e8163519")
 	)
-	(label "7V4_FET"
-		(at 180.34 87.63 0)
+	(label "7v4_FET"
+		(at 185.42 78.74 180)
 		(effects
 			(font
 				(size 0.635 0.635)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
-		(uuid "73fbdcb3-a465-45ed-a731-34a569108321")
+		(uuid "7d34ee3b-0bb6-4b97-b5f5-2b26622da9c9")
 	)
-	(label "7V4_FET"
+	(label "7v4_FET"
 		(at 143.51 64.77 0)
 		(effects
 			(font
@@ -1692,18 +1709,8 @@
 		)
 		(uuid "84fdff06-9790-476f-bf89-a04d0188300d")
 	)
-	(label "PWR_SW"
-		(at 191.77 80.01 0)
-		(effects
-			(font
-				(size 0.635 0.635)
-			)
-			(justify left bottom)
-		)
-		(uuid "93302276-4cd7-4872-85ff-e52ac946337f")
-	)
 	(label "GND"
-		(at 198.12 106.68 0)
+		(at 177.8 104.14 0)
 		(effects
 			(font
 				(size 0.635 0.635)
@@ -1712,7 +1719,7 @@
 		)
 		(uuid "9cac4d58-d2f8-4f24-83e3-e17a4d9ca772")
 	)
-	(label "5V_BUCK"
+	(label "5v_BUCK"
 		(at 143.51 83.82 0)
 		(effects
 			(font
@@ -1721,6 +1728,26 @@
 			(justify left bottom)
 		)
 		(uuid "b7103f39-2ae3-4382-82dc-d0efcec661d2")
+	)
+	(label "PWR_SW"
+		(at 185.42 71.12 180)
+		(effects
+			(font
+				(size 0.635 0.635)
+			)
+			(justify right bottom)
+		)
+		(uuid "b92c831b-d6e9-472e-a926-c46c527dc27b")
+	)
+	(label "GND"
+		(at 185.42 73.66 180)
+		(effects
+			(font
+				(size 0.635 0.635)
+			)
+			(justify right bottom)
+		)
+		(uuid "d661f515-c1a7-4142-b975-886b9dac174c")
 	)
 	(label "LED_ESP"
 		(at 127 97.79 180)
@@ -1754,7 +1781,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_SPDT")
-		(at 198.12 96.52 90)
+		(at 177.8 93.98 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1762,7 +1789,7 @@
 		(dnp no)
 		(uuid "17210b78-3f0c-4f17-9bd3-b3ecb4f78891")
 		(property "Reference" "SW1"
-			(at 207.01 98.298 90)
+			(at 186.69 95.758 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1771,7 +1798,7 @@
 			)
 		)
 		(property "Value" "On/Off"
-			(at 209.804 95.758 90)
+			(at 189.484 93.218 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1780,7 +1807,7 @@
 			)
 		)
 		(property "Footprint" "ESP32_Lego_PF:Slide_Switch_SPDT_12D00G"
-			(at 198.12 96.52 0)
+			(at 177.8 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1789,7 +1816,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 205.74 96.52 0)
+			(at 185.42 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1798,7 +1825,7 @@
 			)
 		)
 		(property "Description" "Switch, single pole double throw"
-			(at 198.12 96.52 0)
+			(at 177.8 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1896,73 +1923,6 @@
 			(project "receiver_board_lower"
 				(path "/c65229a9-37b7-4cd8-a90e-78faaca9b050"
 					(reference "D1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 185.42 71.12 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "35dd9698-0f53-4024-a4aa-fe3b4a064537")
-		(property "Reference" "R1"
-			(at 185.42 64.77 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10k"
-			(at 185.42 67.31 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
-			(at 185.42 72.898 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 185.42 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 185.42 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "04bc8f45-5994-4704-b191-f4bd83631e47")
-		)
-		(pin "2"
-			(uuid "3a180028-3e79-4853-9314-f0fd3889d8f6")
-		)
-		(instances
-			(project "receiver_board_lower"
-				(path "/c65229a9-37b7-4cd8-a90e-78faaca9b050"
-					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -2207,55 +2167,53 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:FQP27P06")
-		(at 182.88 80.01 180)
+		(lib_id "Connector:Conn_01x06_Pin")
+		(at 194.31 73.66 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "def2b3f4-8d8f-4eab-a25e-9f14bf1f456b")
-		(property "Reference" "Q1"
-			(at 176.53 81.2801 0)
+		(fields_autoplaced yes)
+		(uuid "e1efa80c-bcdb-422a-86df-5133af161730")
+		(property "Reference" "J2"
+			(at 195.58 71.1199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
-		(property "Value" "FQP27P06"
-			(at 176.53 78.7401 0)
+		(property "Value" "B2B"
+			(at 195.58 73.6599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
-			(at 177.8 78.105 0)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
+			(at 194.31 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
-					(italic yes)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/FQP27P06-D.PDF"
-			(at 177.8 76.2 0)
+		(property "Datasheet" "~"
+			(at 194.31 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Description" "-27A Id, -60V Vds, QFET P-Channel MOSFET, TO-220"
-			(at 182.88 80.01 0)
+		(property "Description" "Generic connector, single row, 01x06, script generated"
+			(at 194.31 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2264,18 +2222,27 @@
 			)
 		)
 		(pin "2"
-			(uuid "0ff37f42-b967-462b-a269-816d33ed599b")
+			(uuid "6a6adb69-04e4-45d6-a637-6394e5c02345")
 		)
 		(pin "1"
-			(uuid "604583bb-ed9f-4daf-92b1-64908e60c8d9")
+			(uuid "36d24179-0222-4e50-917a-bc5de7b256eb")
+		)
+		(pin "4"
+			(uuid "8adac65d-c626-43e0-9ac4-3726282a3bf2")
+		)
+		(pin "5"
+			(uuid "84ef4acb-6e4b-4501-a066-cc5b3b25be29")
+		)
+		(pin "6"
+			(uuid "0fba5b28-9426-4c06-81b8-7a791af28a52")
 		)
 		(pin "3"
-			(uuid "69b93ec5-47f1-4c59-8222-9eaba9f3511e")
+			(uuid "56ddeba5-bf52-4a41-bf9c-3cdc231122e0")
 		)
 		(instances
-			(project "receiver_board_lower"
+			(project ""
 				(path "/c65229a9-37b7-4cd8-a90e-78faaca9b050"
-					(reference "Q1")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -2308,7 +2275,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Horizontal"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
 			(at 102.87 57.15 0)
 			(effects
 				(font
