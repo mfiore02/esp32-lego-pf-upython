@@ -213,3 +213,4 @@ __marimo__/
 
 # KiCad
 *.lck
+*-backups/
