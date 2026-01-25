@@ -210,3 +210,6 @@ __marimo__/
 # MicroPython specific
 *_config.json
 *.mpy
+
+# KiCad
+*.lck

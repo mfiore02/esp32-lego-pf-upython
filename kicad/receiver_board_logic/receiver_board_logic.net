@@ -1,7 +1,7 @@
 (export (version "E")
   (design
     (source "C:\\Users\\mfjor\\Projects\\esp32-lego-pf-upython\\kicad\\receiver_board_logic\\receiver_board_logic.kicad_sch")
-    (date "2026-01-23T22:26:42-0800")
+    (date "2026-01-25T09:36:45-0800")
     (tool "Eeschema 9.0.6")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block

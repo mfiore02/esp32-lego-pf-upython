@@ -1,7 +1,7 @@
 (export (version "E")
   (design
     (source "C:\\Users\\mfjor\\Projects\\esp32-lego-pf-upython\\kicad\\controller_board\\controller_board.kicad_sch")
-    (date "2026-01-23T22:27:43-0800")
+    (date "2026-01-25T09:36:57-0800")
     (tool "Eeschema 9.0.6")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
