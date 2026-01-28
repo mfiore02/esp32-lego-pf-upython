@@ -47,6 +47,10 @@ TX_PERIOD_MS = 50       # Transmit period in milliseconds
 # RECEIVER-SPECIFIC I/O
 # ============================================================================
 
+# Battery Monitoring (2S LiPo via voltage dividers)
+BATTERY_BPLUS_GPIO = 0   # B+ (full battery voltage, 0-8.4V → 0-2.36V via divider)
+BATTERY_BMID_GPIO = 1    # BM (mid-point voltage, 0-4.2V → 0-2.47V via divider)
+
 # Motor 1 (Channel A) - TB6612FNG
 MOTOR1_PWM_GPIO = 2     # PWMA
 MOTOR1_IN1_GPIO = 4     # AIN1

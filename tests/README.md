@@ -16,6 +16,7 @@ python -m pytest tests/
 - `test_led.py` - LED pattern timing and state management
 - `test_motor_driver.py` - Motor control logic, reversal, and safety features
 - `test_potentiometer.py` - Dead zone calibration and ADC value mapping
+- `test_battery.py` - Battery voltage conversion, status thresholds, and percentage calculation
 
 All unit tests run on host Python (no hardware required).
 Hardware validation tests are in the `hwil/` directory.

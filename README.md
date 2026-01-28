@@ -36,6 +36,7 @@ esp32-lego-pf-upython/
 │   ├── led.py                    # LED patterns (solid, blink, etc)
 │   ├── motor_driver.py           # TB6612 abstraction
 │   ├── potentiometer.py          # ADC with dead zone handling
+│   ├── battery.py                # 2S LiPo voltage monitoring (receiver)
 │   └── hardware.py               # GPIO pin assignments (both devices)
 │
 ├── controller/
@@ -112,6 +113,8 @@ See `docs/lego_pf_controller_build_guide.pdf` for detailed wiring diagrams and a
 | Motor 2 IN2 | GPIO6 | TB6612 BIN2 |
 | Status LED | GPIO8 | Status indicator |
 | Pairing Button | GPIO10 | External button (active low) |
+| Battery B+ (ADC) | GPIO0 | Full battery voltage via 100k/39k divider |
+| Battery BM (ADC) | GPIO1 | Mid-point voltage via 33k/47k divider |
 
 ## Configuration Format
 
@@ -260,7 +263,8 @@ screen /dev/ttyUSB0 115200
 
 ## Future Enhancements
 
-- [ ] Battery level monitoring (receiver → controller telemetry)
+- [x] Battery level monitoring (`lib/battery.py` — voltage, per-cell, status, percentage)
+- [ ] Battery telemetry (receiver → controller over ESP-NOW)
 - [ ] Multiple train support (train selector on controller)
 - [ ] Speed limit profiles (parental controls)
 - [ ] Additional GPIO features (lights, sound effects)

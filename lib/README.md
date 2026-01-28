@@ -10,6 +10,7 @@ This directory contains MicroPython modules shared between the controller and re
 - `potentiometer.py` - ADC reading with dead zone calibration
 - `motor_driver.py` - TB6612 motor driver abstraction
 - `espnow_protocol.py` - ESP-NOW communication protocol wrapper
+- `battery.py` - 2S LiPo battery voltage monitoring via ADC (receiver only)
 
 ## Usage
 

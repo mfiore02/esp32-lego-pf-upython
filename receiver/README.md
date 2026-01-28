@@ -21,6 +21,10 @@ GPIO pin assignments are centralized in [lib/hardware.py](../lib/hardware.py).
   - IN1: GPIO7 (BIN1)
   - IN2: GPIO6 (BIN2)
 
+- **Battery Monitoring (2S LiPo via voltage dividers):**
+  - B+ (full battery): GPIO0, 100k/39k divider (8.4V → 2.36V max)
+  - BM (mid-point): GPIO1, 33k/47k divider (4.2V → 2.47V max)
+
 - **Other I/O:**
   - Status LED: GPIO8 (status indicator, active high)
   - Pairing button: GPIO10 (external button, active low with pull-up)
